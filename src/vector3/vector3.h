@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 /**
  * @brief A 3D vector
  */
