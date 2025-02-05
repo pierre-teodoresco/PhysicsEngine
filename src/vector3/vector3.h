@@ -13,6 +13,12 @@ public:
     float z;
 
     /**
+     * @brief Get the zero vector
+     * @return The zero vector
+     */
+    static const Vector3 zero();
+
+    /**
      * @brief Norm of the vector
      * @return The norm
      */
@@ -22,7 +28,7 @@ public:
      * @brief Squared norm of the vector
      * @return The squared norm
      */
-    float squaredNorm() const;
+    inline float squaredNorm() const;
 
     /**
      * @brief Normalize the vector in place
@@ -80,7 +86,7 @@ public:
      * @param other The other vector
      * @return The result
      */
-    float dot(const Vector3 &other) const;
+    inline float dot(const Vector3 &other) const;
 
     /**
      * @brief Component product of two vectors
@@ -91,7 +97,13 @@ public:
 
     /**
      * @brief == operator
-     * @return True if the vectors are equal
+     * @return True if the vectors are equal (within 1e-6f epsilon), false otherwise
      */
     bool operator==(const Vector3 &other) const;
+
+    /**
+     * @brief Convert the vector to a string for debugging
+     * @return The string
+     */
+    std::string to_string() const;
 };
