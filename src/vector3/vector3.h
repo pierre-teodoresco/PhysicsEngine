@@ -9,17 +9,31 @@
 class Vector3
 {
 public:
-    constexpr Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f);
-
-    float x;
-    float y;
-    float z;
+    constexpr Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z) {};
 
     /**
      * @brief Get the zero vector
      * @return The zero vector
      */
     static const Vector3 zero() { return {0.0f, 0.0f, 0.0f}; }
+
+    /**
+     * @brief Get the x component
+     * @return The x component
+     */
+    float getX() const { return x; }
+
+    /**
+     * @brief Get the y component
+     * @return The y component
+     */
+    float getY() const { return y; }
+
+    /**
+     * @brief Get the z component
+     * @return The z component
+     */
+    float getZ() const { return z; }
 
     /**
      * @brief Norm of the vector
@@ -116,4 +130,7 @@ public:
      * @return The string
      */
     std::string to_string() const;
+
+private:
+    float x, y, z;
 };

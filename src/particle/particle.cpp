@@ -29,9 +29,9 @@ void Particle::integrate(float dt)
 
 void Particle::render(sf::RenderWindow &window) const
 {
-    sf::CircleShape shape(radius);
+    sf::CircleShape shape(RADIUS);
     shape.setFillColor(sf::Color::White);
-    shape.setPosition(sf::Vector2(position.x, position.y));
+    shape.setPosition(sf::Vector2(position.getX(), position.getY()));
     window.draw(shape);
 }
 

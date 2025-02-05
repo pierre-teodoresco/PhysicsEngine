@@ -14,6 +14,6 @@ add_subdirectory(src)
 
 include(AddSFML)
 add_executable(physics_engine main.cpp)
-target_link_libraries(physics_engine PRIVATE engine SFML::Graphics)
+target_link_libraries(physics_engine PRIVATE application SFML::Graphics)
 
 add_subdirectory(test)

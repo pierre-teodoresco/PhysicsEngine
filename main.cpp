@@ -1,7 +1,7 @@
-#include "engine/engine.h"
+#include "application/application.h"
 
 int main()
 {
-    auto engine = PhysicsEngine();
-    engine.run();
+    auto app = Application();
+    app.run();
 }

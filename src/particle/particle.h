@@ -77,7 +77,7 @@ public:
      */
     void setDamping(float damping);
 
-    const float radius = 50.f;
+    static constexpr float RADIUS = 50.f;
 
 private:
     Vector3 position, oldPosition;
