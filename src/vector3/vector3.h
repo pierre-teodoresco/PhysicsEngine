@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <string>
 
 /**
@@ -8,7 +9,7 @@
 class Vector3
 {
 public:
-    Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f);
+    constexpr Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 
     float x;
     float y;
@@ -18,19 +19,19 @@ public:
      * @brief Get the zero vector
      * @return The zero vector
      */
-    static const Vector3 zero();
+    static const Vector3 zero() { return {0.0f, 0.0f, 0.0f}; }
 
     /**
      * @brief Norm of the vector
      * @return The norm
      */
-    float norm() const;
+    float norm() const { return std::hypot(x, y, z); }
 
     /**
      * @brief Squared norm of the vector
      * @return The squared norm
      */
-    inline float squaredNorm() const;
+    float squaredNorm() const { return x * x + y * y + z * z; }
 
     /**
      * @brief Normalize the vector in place
@@ -88,7 +89,7 @@ public:
      * @param other The other vector
      * @return The result
      */
-    inline float dot(const Vector3 &other) const;
+    float dot(const Vector3 &other) const;
 
     /**
      * @brief Component product of two vectors

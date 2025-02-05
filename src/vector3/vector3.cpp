@@ -1,24 +1,8 @@
 #include "vector3.h"
-#include <cmath>
 
-Vector3::Vector3(float x, float y, float z)
+constexpr Vector3::Vector3(float x, float y, float z)
     : x(x), y(y), z(z)
 {
-}
-
-static const Vector3 Vector3::zero()
-{
-    return {0.0f, 0.0f, 0.0f};
-}
-
-float Vector3::norm() const
-{
-    return std::hypot(x, y, z);
-}
-
-inline float Vector3::squaredNorm() const
-{
-    return x * x + y * y + z * z;
 }
 
 void Vector3::normalize()
@@ -71,7 +55,7 @@ Vector3 Vector3::operator*(const Vector3 &other) const
     return {y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x};
 }
 
-inline float Vector3::dot(const Vector3 &other) const
+float Vector3::dot(const Vector3 &other) const
 {
     return x * other.x + y * other.y + z * other.z;
 }
