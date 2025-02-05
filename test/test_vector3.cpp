@@ -16,6 +16,14 @@ TEST_CASE("a Vector3 can be declared", "[vector3]")
     REQUIRE(v2.z == 3);
 }
 
+TEST_CASE("a null Vector3 can be declared", "[vector3]")
+{
+    Vector3 v = Vector3::zero();
+    REQUIRE(v.x == 0);
+    REQUIRE(v.y == 0);
+    REQUIRE(v.z == 0);
+}
+
 TEST_CASE("norm of a Vector3 can be computed", "[vector3]")
 {
     Vector3 v(1, 2, 3);

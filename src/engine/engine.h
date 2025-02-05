@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "particle/particle.h"
 
 /**
@@ -35,5 +36,5 @@ private:
     void update();
 
     sf::RenderWindow window;
-    Particle p;
+    std::vector<Particle> particles;
 };

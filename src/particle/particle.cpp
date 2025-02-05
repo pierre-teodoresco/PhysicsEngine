@@ -1,10 +1,8 @@
 #include "particle/particle.h"
 
-Particle::Particle(Vector3 position, float mass, float damping, Integrator integrator)
-    : position(position), inverseMass(1.0f / mass), damping(damping), integrator(integrator)
+Particle::Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass, float damping, Integrator integrator)
+    : position(position), velocity(velocity), acceleration(acceleration), inverseMass(1.0f / mass), damping(damping), integrator(integrator)
 {
-    velocity = Vector3();
-    acceleration = Vector3();
 }
 
 Particle::~Particle()
@@ -29,7 +27,7 @@ void Particle::integrate(float dt)
     }
 }
 
-void Particle::render(sf::RenderWindow &window)
+void Particle::render(sf::RenderWindow &window) const
 {
     sf::CircleShape shape(radius);
     shape.setFillColor(sf::Color::White);
@@ -68,10 +66,24 @@ void Particle::euler(float dt)
     velocity += acceleration * dt * damping;
 
     // Update position using velocity
-    position += velocity * dt + acceleration * 0.5 * dt * dt;
+    position += velocity * dt + acceleration * 0.5f * dt * dt;
 }
 
 void Particle::verlet(float dt)
 {
-    // TODO
+    if (firstFrame)
+    {
+        // If it's the first frame, we need to initialize the previous position
+        oldPosition = position - velocity * dt;
+    }
+
+    Vector3 oldPos = position;
+
+    // Update position using old position and acceleration
+    position = position * 2.0f - oldPosition + acceleration * dt * dt;
+
+    // Update velocity using new position
+    velocity = (position - oldPosition) / (2.0f * dt);
+
+    oldPosition = oldPos;
 }

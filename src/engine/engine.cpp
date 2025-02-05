@@ -1,9 +1,10 @@
 #include "engine.h"
 
 PhysicsEngine::PhysicsEngine()
-    : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), p(Particle(Vector3(350, 100, 0)))
+    : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE)
 {
     window.setFramerateLimit(FPS);
+    particles.push_back(Particle(Vector3(350, 200, 0), Vector3::zero(), Vector3::zero(), 1.0f, 0.8f, Particle::Integrator::Euler));
 }
 
 PhysicsEngine::~PhysicsEngine()
@@ -30,12 +31,18 @@ void PhysicsEngine::run()
 void PhysicsEngine::render()
 {
     window.clear(sf::Color::Black);
-    p.render(window);
+    for (const auto &p : particles)
+    {
+        p.render(window);
+    }
     window.display();
 }
 
 void PhysicsEngine::update()
 {
-    p.addForce(Vector3(0, 9.81f, 0));
-    p.integrate(DT);
+    for (auto &p : particles)
+    {
+        p.addForce(Vector3(0, 9.81f, 0));
+        p.integrate(DT);
+    }
 }

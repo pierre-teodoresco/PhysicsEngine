@@ -46,6 +46,13 @@ public:
     Vector3 operator*(float scalar) const;
 
     /**
+     * @brief Divide the vector by a scalar
+     * @param scalar The scalar
+     * @return The result
+     */
+    Vector3 operator/(float scalar) const;
+
+    /**
      * @brief Add two vectors
      * @param other The other vector
      * @return The result

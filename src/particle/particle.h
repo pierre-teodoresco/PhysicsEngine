@@ -15,7 +15,7 @@ public:
         Verlet
     };
 
-    Particle(Vector3 position, float mass = 1.0f, float damping = 0.99f, Integrator integrator = Integrator::Euler);
+    Particle(Vector3 position = Vector3::zero(), Vector3 velocity = Vector3::zero(), Vector3 acceleration = Vector3::zero(), float mass = 1.0f, float damping = 0.8f, Integrator integrator = Integrator::Euler);
     ~Particle();
 
     /**
@@ -33,7 +33,7 @@ public:
     /**
      * @brief Render the particle
      */
-    void render(sf::RenderWindow &window);
+    void render(sf::RenderWindow &window) const;
 
     /**
      * @brief Get the position of the particle
@@ -72,7 +72,7 @@ public:
     void setMass(float mass);
 
     /**
-     * @brief Set the damping of the particle
+     * @brief Set the damping of the particle. The damping factor represents the percentage of velocity kept after each frame
      * @param damping The damping of the particle
      */
     void setDamping(float damping);
@@ -80,13 +80,14 @@ public:
     const float radius = 50.f;
 
 private:
-    Vector3 position;
+    Vector3 position, oldPosition;
     Vector3 velocity;
     Vector3 acceleration;
 
     float inverseMass;
     float damping;
     Integrator integrator;
+    bool firstFrame = true;
 
     /**
      * @brief Euler integration
