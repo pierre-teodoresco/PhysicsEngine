@@ -4,7 +4,7 @@ void Application::run()
 {
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    sf::Time timePerFrame = sf::seconds(1.0f / FPS);
+    sf::Time timePerFrame = sf::seconds(1.0f / UPS);
 
     while (window.isOpen())
     {
