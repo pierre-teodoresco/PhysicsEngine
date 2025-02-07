@@ -18,6 +18,10 @@ public:
     static constexpr Vector3 GRAVITY = {0, 9.81f, 0};
 
 private:
+    /**
+     * @brief Gather mouse input
+     * @param window application window
+     */
     void gatherMouseInput(sf::RenderWindow &window);
 
     std::vector<Particle> particles;

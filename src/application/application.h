@@ -19,10 +19,10 @@ public:
      */
     void run();
 
-    static constexpr auto TITLE = "Physics Engine - Demo";
+    static constexpr auto TITLE = "Physics Engine - Balistic";
     static constexpr auto WIDTH = 1920u;
     static constexpr auto HEIGHT = 1080u;
-    static constexpr auto FPS = 60u;
+    static constexpr auto UPS = 144u; // Update Per Second
 
 private:
     /**
