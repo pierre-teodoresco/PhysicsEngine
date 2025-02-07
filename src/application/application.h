@@ -12,7 +12,8 @@
 class Application
 {
 public:
-    Application();
+    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE) { game = std::make_shared<Balistic>(); }
+    ~Application() {}
 
     /**
      * @brief Run the application

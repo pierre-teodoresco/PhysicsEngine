@@ -1,11 +1,5 @@
 #include "application.h"
 
-Application::Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE)
-{
-    window.setFramerateLimit(FPS);
-    game = std::make_shared<Balistic>();
-}
-
 void Application::run()
 {
     sf::Clock clock;
