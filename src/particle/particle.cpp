@@ -1,7 +1,7 @@
 #include "particle/particle.h"
 
-Particle::Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass, float damping, Integrator integrator)
-    : position(position), velocity(velocity), acceleration(acceleration), inverseMass(1.0f / mass), damping(damping), integrator(integrator)
+Particle::Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass, std::shared_ptr<Integrator> integrator)
+    : position(position), velocity(velocity), acceleration(acceleration), inverseMass(1.0f / mass), integrator(integrator)
 {
 }
 
@@ -16,15 +16,7 @@ void Particle::addForce(const Vector3 &force)
 
 void Particle::integrate(float dt)
 {
-    switch (integrator)
-    {
-    case Integrator::Euler:
-        euler(dt);
-        break;
-    case Integrator::Verlet:
-        verlet(dt);
-        break;
-    }
+    integrator->integrate(dt, position, velocity, acceleration);
 }
 
 void Particle::render(sf::RenderWindow &window) const
@@ -55,35 +47,7 @@ float Particle::getMass() const
     return 1.0f / inverseMass;
 }
 
-void Particle::setIntegration(Integrator integrator)
+void Particle::setIntegrator(std::shared_ptr<Integrator> integrator)
 {
     this->integrator = integrator;
-}
-
-void Particle::euler(float dt)
-{
-    // Update velocity using acceleration
-    velocity += acceleration * dt * damping;
-
-    // Update position using velocity
-    position += velocity * dt + acceleration * 0.5f * dt * dt;
-}
-
-void Particle::verlet(float dt)
-{
-    if (firstFrame)
-    {
-        // If it's the first frame, we need to initialize the previous position
-        oldPosition = position - velocity * dt;
-    }
-
-    Vector3 oldPos = position;
-
-    // Update position using old position and acceleration
-    position = position * 2.0f - oldPosition + acceleration * dt * dt;
-
-    // Update velocity using new position
-    velocity = (position - oldPosition) / (2.0f * dt);
-
-    oldPosition = oldPos;
 }
