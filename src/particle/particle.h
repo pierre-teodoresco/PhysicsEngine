@@ -1,6 +1,8 @@
 #pragma once
 
 #include "vector3/vector3.h"
+#include "integrator/integrator.hpp"
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 /**
@@ -9,13 +11,20 @@
 class Particle
 {
 public:
-    enum class Integrator
-    {
-        Euler,
-        Verlet
-    };
-
-    Particle(Vector3 position = Vector3::zero(), Vector3 velocity = Vector3::zero(), Vector3 acceleration = Vector3::zero(), float mass = 1.0f, float damping = 0.8f, Integrator integrator = Integrator::Euler);
+    /**
+     * @brief Create a new particle
+     * @param position initial position of the particle (default to origin)
+     * @param velocity initial velocity of the particle (default to zero)
+     * @param acceleration initial acceleration of the particle (default to zero)
+     * @param mass mass of the particle (default to 1.0f)
+     * @param integrator integration method (default to Verlet)
+     */
+    Particle(
+        Vector3 position = Vector3::zero(),
+        Vector3 velocity = Vector3::zero(),
+        Vector3 acceleration = Vector3::zero(),
+        float mass = 1.0f,
+        std::shared_ptr<Integrator> integrator = std::make_shared<Verlet>());
     ~Particle();
 
     /**
@@ -63,7 +72,7 @@ public:
      * @brief Choose integration method
      * @param integration The integration method
      */
-    void setIntegration(Integrator integrator);
+    void setIntegrator(std::shared_ptr<Integrator> integrator);
 
     /**
      * @brief Set the mass of the particle
@@ -71,33 +80,10 @@ public:
      */
     void setMass(float mass);
 
-    /**
-     * @brief Set the damping of the particle. The damping factor represents the percentage of velocity kept after each frame
-     * @param damping The damping of the particle
-     */
-    void setDamping(float damping);
-
     static constexpr float RADIUS = 50.f;
 
 private:
-    Vector3 position, oldPosition;
-    Vector3 velocity;
-    Vector3 acceleration;
-
+    Vector3 position, velocity, acceleration;
     float inverseMass;
-    float damping;
-    Integrator integrator;
-    bool firstFrame = true;
-
-    /**
-     * @brief Euler integration
-     * @param dt The time step (frame time)
-     */
-    void euler(float dt);
-
-    /**
-     * @brief Verlet integration
-     * @param dt The time step (frame time)
-     */
-    void verlet(float dt);
+    std::shared_ptr<Integrator> integrator;
 };
