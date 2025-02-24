@@ -12,7 +12,7 @@
 class Application
 {
 public:
-    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE) { game = std::make_shared<Balistic>(); }
+    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), game{std::make_shared<Balistic>()} {  }
     ~Application() = default;
 
     /**
