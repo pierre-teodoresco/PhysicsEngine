@@ -9,7 +9,19 @@
 class Vector3
 {
 public:
-    constexpr Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z) {};
+
+    /**
+     * @brief Construct a new Vector3 object
+     */
+    constexpr Vector3() = default;
+
+    /**
+     * @brief Construct a new Vector3 object
+     * @param x The x component
+     * @param y The y component
+     * @param z The z component
+     */
+    constexpr Vector3(float x, float y, float z) : x(x), y(y), z(z) {};
 
     /**
      * @brief Get the zero vector
@@ -132,5 +144,5 @@ public:
     std::string to_string() const;
 
 private:
-    float x, y, z;
+    float x{.0}, y{.0}, z{.0};
 };
