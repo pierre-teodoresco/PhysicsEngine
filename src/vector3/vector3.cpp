@@ -2,8 +2,9 @@
 
 void Vector3::normalize()
 {
+    const float EPSILON = 1e-6f;
     const auto n = norm();
-    if (n != 0)
+    if (std::fabs(n) > EPSILON)
     {
         x /= n;
         y /= n;
