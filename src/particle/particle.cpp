@@ -5,10 +5,6 @@ Particle::Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, flo
 {
 }
 
-Particle::~Particle()
-{
-}
-
 void Particle::addForce(const Vector3 &force)
 {
     acceleration += force * inverseMass;

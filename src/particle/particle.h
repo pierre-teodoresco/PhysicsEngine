@@ -16,7 +16,7 @@ public:
     };
 
     Particle(Vector3 position = Vector3::zero(), Vector3 velocity = Vector3::zero(), Vector3 acceleration = Vector3::zero(), float mass = 1.0f, float damping = 0.8f, Integrator integrator = Integrator::Euler);
-    ~Particle();
+    ~Particle() = default;
 
     /**
      * @brief Compute the force applied to the particle
