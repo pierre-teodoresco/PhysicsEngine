@@ -44,7 +44,7 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         Vector3 clickPosition = {float(mousePos.x), float(mousePos.y), 0.0f};
 
-        Vector3 bottomLeftCorner = Vector3(0.0f, window.getSize().y, 0.0f);
+        Vector3 bottomLeftCorner = Vector3(.0f, window.getSize().y, .0f);
 
         // get the vector from the bottom left corner of the window to the mouse position
         Vector3 direction = clickPosition - bottomLeftCorner;
