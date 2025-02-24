@@ -1,10 +1,5 @@
 #include "particle/particle.h"
 
-Particle::Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass, float damping, Integrator integrator)
-    : position(position), velocity(velocity), acceleration(acceleration), inverseMass(1.0f / mass), damping(damping), integrator(integrator)
-{
-}
-
 void Particle::addForce(const Vector3 &force)
 {
     acceleration += force * inverseMass;
@@ -51,9 +46,9 @@ float Particle::getMass() const
     return 1.0f / inverseMass;
 }
 
-void Particle::setIntegration(Integrator integrator)
+void Particle::setIntegration(Integrator i)
 {
-    this->integrator = integrator;
+    this->integrator = i;
 }
 
 void Particle::euler(float dt)

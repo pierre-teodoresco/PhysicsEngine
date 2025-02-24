@@ -15,7 +15,16 @@ public:
         Verlet
     };
 
-    Particle(Vector3 position = Vector3::zero(), Vector3 velocity = Vector3::zero(), Vector3 acceleration = Vector3::zero(), float mass = 1.0f, float damping = 0.8f, Integrator integrator = Integrator::Euler);
+    Particle() = default;
+
+    Particle(Vector3 position, Vector3 velocity , Vector3 acceleration , float mass, float damping, Integrator integrator)
+        : position(position),
+        velocity(velocity),
+        acceleration(acceleration),
+        inverseMass(1.0f / mass),
+        damping(damping),
+        integrator(integrator) {};
+
     ~Particle() = default;
 
     /**
@@ -63,7 +72,7 @@ public:
      * @brief Choose integration method
      * @param integration The integration method
      */
-    void setIntegration(Integrator integrator);
+    void setIntegration(Integrator i);
 
     /**
      * @brief Set the mass of the particle
@@ -80,14 +89,15 @@ public:
     static constexpr float RADIUS = 50.f;
 
 private:
-    Vector3 position, oldPosition;
-    Vector3 velocity;
-    Vector3 acceleration;
+    Vector3 position{};
+    Vector3 oldPosition{};
+    Vector3 velocity{};
+    Vector3 acceleration{};
 
-    float inverseMass;
-    float damping;
-    Integrator integrator;
-    bool firstFrame = true;
+    float inverseMass{1.f};
+    float damping{.8f};
+    Integrator integrator{Integrator::Euler};
+    bool firstFrame {true};
 
     /**
      * @brief Euler integration
