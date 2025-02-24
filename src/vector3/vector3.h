@@ -27,7 +27,7 @@ public:
      * @brief Get the zero vector
      * @return The zero vector
      */
-    static const Vector3 zero() { return {0.0f, 0.0f, 0.0f}; }
+    static Vector3 zero() { return { }; }
 
     /**
      * @brief Get the x component
