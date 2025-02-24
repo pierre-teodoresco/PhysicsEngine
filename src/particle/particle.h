@@ -39,25 +39,25 @@ public:
      * @brief Get the position of the particle
      * @return The position of the particle
      */
-    Vector3 getPosition() const;
+    [[nodiscard]] Vector3 getPosition() const;
 
     /**
      * @brief Get the velocity of the particle
      * @return The velocity of the particle
      */
-    Vector3 getVelocity() const;
+    [[nodiscard]] Vector3 getVelocity() const;
 
     /**
      * @brief Get the acceleration of the particle
      * @return The acceleration of the particle
      */
-    Vector3 getAcceleration() const;
+    [[nodiscard]] Vector3 getAcceleration() const;
 
     /**
      * @brief Get the mass of the particle
      * @return The mass of the particle
      */
-    float getMass() const;
+    [[nodiscard]] float getMass() const;
 
     /**
      * @brief Choose integration method
