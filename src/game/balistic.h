@@ -12,8 +12,8 @@
 class Balistic : public Game
 {
 public:
-    void render(sf::RenderWindow &window);
-    void update(sf::RenderWindow &window, float dt);
+    void render(sf::RenderWindow &window) override;
+    void update(sf::RenderWindow &window, float dt) override;
 
     static constexpr Vector3 GRAVITY = {0, 9.81f, 0};
 

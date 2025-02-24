@@ -9,43 +9,55 @@
 class Vector3
 {
 public:
-    constexpr Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z) {};
+
+    /**
+     * @brief Construct a new Vector3 object
+     */
+    constexpr Vector3() = default;
+
+    /**
+     * @brief Construct a new Vector3 object
+     * @param x The x component
+     * @param y The y component
+     * @param z The z component
+     */
+    constexpr Vector3(float x, float y, float z) : x(x), y(y), z(z) {};
 
     /**
      * @brief Get the zero vector
      * @return The zero vector
      */
-    static const Vector3 zero() { return {0.0f, 0.0f, 0.0f}; }
+    static Vector3 zero() { return { }; }
 
     /**
      * @brief Get the x component
      * @return The x component
      */
-    float getX() const { return x; }
+    [[nodiscard]] float getX() const { return x; }
 
     /**
      * @brief Get the y component
      * @return The y component
      */
-    float getY() const { return y; }
+    [[nodiscard]] float getY() const { return y; }
 
     /**
      * @brief Get the z component
      * @return The z component
      */
-    float getZ() const { return z; }
+    [[nodiscard]] float getZ() const { return z; }
 
     /**
      * @brief Norm of the vector
      * @return The norm
      */
-    float norm() const { return std::hypot(x, y, z); }
+    [[nodiscard]] float norm() const { return std::hypot(x, y, z); }
 
     /**
      * @brief Squared norm of the vector
      * @return The squared norm
      */
-    float squaredNorm() const { return x * x + y * y + z * z; }
+    [[nodiscard]] float squaredNorm() const { return x * x + y * y + z * z; }
 
     /**
      * @brief Normalize the vector in place
@@ -110,14 +122,14 @@ public:
      * @param other The other vector
      * @return The result
      */
-    float dot(const Vector3 &other) const;
+    [[nodiscard]] float dot(const Vector3 &other) const;
 
     /**
      * @brief Component product of two vectors
      * @param other The other vector
      * @return The result
      */
-    Vector3 componentProduct(const Vector3 &other) const;
+    [[nodiscard]] Vector3 componentProduct(const Vector3 &other) const;
 
     /**
      * @brief == operator
@@ -129,8 +141,8 @@ public:
      * @brief Convert the vector to a string for debugging
      * @return The string
      */
-    std::string to_string() const;
+    [[nodiscard]] std::string to_string() const;
 
 private:
-    float x, y, z;
+    float x{.0}, y{.0}, z{.0};
 };
