@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 project(CMakeSFMLProject LANGUAGES CXX)
 
-enable_testing()
+option(BUILD_TESTS "Build tests" ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -16,4 +16,7 @@ include(AddSFML)
 add_executable(physics_engine main.cpp)
 target_link_libraries(physics_engine PRIVATE application SFML::Graphics)
 
-add_subdirectory(test)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
