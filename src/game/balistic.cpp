@@ -50,7 +50,7 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
         Vector3 direction = clickPosition - bottomLeftCorner;
 
         // create a new particle at the bottom left corner of the window with a velocity in the direction of the mouse
-        particles.push_back(Particle(bottomLeftCorner, direction, Vector3::zero(), 1.0f, 0.8f, Particle::Integrator::Verlet));
+        particles.emplace_back(bottomLeftCorner, direction, Vector3::zero(), 1.f, .8f, Particle::Integrator::Verlet);
     }
 
     wasMousePressed = isMousePressed;
