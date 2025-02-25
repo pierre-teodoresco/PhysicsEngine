@@ -21,4 +21,6 @@ public:
      * @param dt Delta time
      */
     virtual void update(sf::RenderWindow &window, float dt) = 0;
+
+    virtual ~Game() = default;
 };

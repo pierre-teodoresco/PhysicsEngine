@@ -15,8 +15,17 @@ public:
         Verlet
     };
 
-    Particle(Vector3 position = Vector3::zero(), Vector3 velocity = Vector3::zero(), Vector3 acceleration = Vector3::zero(), float mass = 1.0f, float damping = 0.8f, Integrator integrator = Integrator::Euler);
-    ~Particle();
+    Particle() = default;
+
+    Particle(Vector3 position, Vector3 velocity , Vector3 acceleration , float mass, float damping, Integrator integrator)
+        : position(position),
+        velocity(velocity),
+        acceleration(acceleration),
+        inverseMass(1.0f / mass),
+        damping(damping),
+        integrator(integrator) {};
+
+    ~Particle() = default;
 
     /**
      * @brief Compute the force applied to the particle
@@ -39,31 +48,31 @@ public:
      * @brief Get the position of the particle
      * @return The position of the particle
      */
-    Vector3 getPosition() const;
+    [[nodiscard]] Vector3 getPosition() const;
 
     /**
      * @brief Get the velocity of the particle
      * @return The velocity of the particle
      */
-    Vector3 getVelocity() const;
+    [[nodiscard]] Vector3 getVelocity() const;
 
     /**
      * @brief Get the acceleration of the particle
      * @return The acceleration of the particle
      */
-    Vector3 getAcceleration() const;
+    [[nodiscard]] Vector3 getAcceleration() const;
 
     /**
      * @brief Get the mass of the particle
      * @return The mass of the particle
      */
-    float getMass() const;
+    [[nodiscard]] float getMass() const;
 
     /**
      * @brief Choose integration method
      * @param integration The integration method
      */
-    void setIntegration(Integrator integrator);
+    void setIntegration(Integrator i);
 
     /**
      * @brief Set the mass of the particle
@@ -80,14 +89,15 @@ public:
     static constexpr float RADIUS = 50.f;
 
 private:
-    Vector3 position, oldPosition;
-    Vector3 velocity;
-    Vector3 acceleration;
+    Vector3 position{};
+    Vector3 oldPosition{};
+    Vector3 velocity{};
+    Vector3 acceleration{};
 
-    float inverseMass;
-    float damping;
-    Integrator integrator;
-    bool firstFrame = true;
+    float inverseMass{1.f};
+    float damping{.8f};
+    Integrator integrator{Integrator::Euler};
+    bool firstFrame {true};
 
     /**
      * @brief Euler integration

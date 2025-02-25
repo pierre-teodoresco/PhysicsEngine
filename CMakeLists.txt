@@ -1,7 +1,30 @@
 cmake_minimum_required(VERSION 3.28)
 project(CMakeSFMLProject LANGUAGES CXX)
 
-enable_testing()
+option(BUILD_TESTS "Build tests" ON)
+option(ENABLE_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+
+# compile options for all targets depending on the compiler and the system
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    set(MY_COMPILE_OPTIONS "-Wall;-Wextra;-pedantic;-Wno-comment;-Wshadow;-Wnon-virtual-dtor;-Wpedantic;-Wconversion;-Wmisleading-indentation;-Wsign-conversion;-Wfloat-equal")
+    if(ENABLE_WARNINGS_AS_ERRORS)
+        list(APPEND MY_COMPILE_OPTIONS "-Werror")
+    endif()
+elseif(MSVC)
+    set(MY_COMPILE_OPTIONS "/W4;/permissive-")
+    if(ENABLE_WARNINGS_AS_ERRORS)
+        list(APPEND MY_COMPILE_OPTIONS "/WX")
+    endif()
+endif()
+if(APPLE)
+    list(APPEND MY_COMPILE_OPTIONS "-Wno-deprecated-declarations")
+endif()
+
+# compile definitions for all targets depending on the compiler and the system
+set(MY_COMPILE_DEFINITIONS "")
+if(MSVC)
+    set(MY_COMPILE_DEFINITIONS "-DNOMINMAX;-D_USE_MATH_DEFINES")
+endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -15,5 +38,9 @@ add_subdirectory(src)
 include(AddSFML)
 add_executable(physics_engine main.cpp)
 target_link_libraries(physics_engine PRIVATE application SFML::Graphics)
+target_compile_options(physics_engine PRIVATE ${MY_COMPILE_OPTIONS})
 
-add_subdirectory(test)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
