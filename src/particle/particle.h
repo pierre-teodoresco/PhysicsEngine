@@ -1,6 +1,8 @@
 #pragma once
 
 #include "vector3/vector3.h"
+#include "integrator/integrator.hpp"
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 /**
@@ -9,21 +11,14 @@
 class Particle
 {
 public:
-    enum class Integrator
-    {
-        Euler,
-        Verlet
-    };
-
     Particle() = default;
 
-    Particle(Vector3 position, Vector3 velocity , Vector3 acceleration , float mass, float damping, Integrator integrator)
+    Particle(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass, std::shared_ptr<Integrator> integrator)
         : position(position),
-        velocity(velocity),
-        acceleration(acceleration),
-        inverseMass(1.0f / mass),
-        damping(damping),
-        integrator(integrator) {};
+          velocity(velocity),
+          acceleration(acceleration),
+          inverseMass(1.0f / mass),
+          integrator(integrator) {};
 
     ~Particle() = default;
 
@@ -72,19 +67,13 @@ public:
      * @brief Choose integration method
      * @param integration The integration method
      */
-    void setIntegration(Integrator i);
+    void setIntegrator(std::shared_ptr<Integrator> integrator);
 
     /**
      * @brief Set the mass of the particle
      * @param mass The mass of the particle
      */
     void setMass(float mass);
-
-    /**
-     * @brief Set the damping of the particle. The damping factor represents the percentage of velocity kept after each frame
-     * @param damping The damping of the particle
-     */
-    void setDamping(float damping);
 
     static constexpr float RADIUS = 50.f;
 
@@ -95,19 +84,5 @@ private:
     Vector3 acceleration{};
 
     float inverseMass{1.f};
-    float damping{.8f};
-    Integrator integrator{Integrator::Euler};
-    bool firstFrame {true};
-
-    /**
-     * @brief Euler integration
-     * @param dt The time step (frame time)
-     */
-    void euler(float dt);
-
-    /**
-     * @brief Verlet integration
-     * @param dt The time step (frame time)
-     */
-    void verlet(float dt);
+    std::shared_ptr<Integrator> integrator{std::make_shared<Verlet>()};
 };

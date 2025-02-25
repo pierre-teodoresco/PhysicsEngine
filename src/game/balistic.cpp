@@ -1,5 +1,6 @@
 #include "balistic.h"
 #include <iostream>
+#include <memory>
 
 void Balistic::render(sf::RenderWindow &window)
 {
@@ -49,8 +50,11 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
         // get the vector from the bottom left corner of the window to the mouse position
         Vector3 direction = clickPosition - bottomLeftCorner;
 
+        // create an integrator for the particle
+        auto integrator = std::make_shared<Verlet>();
+
         // create a new particle at the bottom left corner of the window with a velocity in the direction of the mouse
-        particles.emplace_back(bottomLeftCorner, direction, Vector3::zero(), 1.f, .8f, Particle::Integrator::Verlet);
+        particles.emplace_back(Particle(bottomLeftCorner, direction, Vector3::zero(), 1.f, integrator));
     }
 
     wasMousePressed = isMousePressed;
