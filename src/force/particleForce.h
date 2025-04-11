@@ -10,6 +10,9 @@ namespace pe
     class ParticleForceGenerator
     {
     public:
+        ParticleForceGenerator() = default;
+        virtual ~ParticleForceGenerator() = default;
+
         /**
          * @brief Apply a force to a particle
          * @param particle particle on which the force is applied
@@ -23,6 +26,7 @@ namespace pe
      */
     class ParticleForceRegistry
     {
+    public:
         struct ParticleForceRegistration
         {
             std::shared_ptr<Particle> particle;
@@ -58,5 +62,28 @@ namespace pe
 
     private:
         Registry registry;
+    };
+
+    /**
+     * @brief Gravity force generator for a particle
+     */
+    class ParticleGravity : public ParticleForceGenerator
+    {
+    public:
+        ParticleGravity() = default;
+        ~ParticleGravity() = default;
+
+        /**
+         * @brief Apply gravity to a particle
+         * @param particle targeted particle
+         * @param duration duration of a frame (unused)
+         */
+        void updateForce(std::shared_ptr<Particle> particle, [[maybe_unused]] float duration)
+        {
+            particle->addForce(gravity);
+        }
+
+    private:
+        Vector3 gravity{0.f, 9.81f, 0.f};
     };
 }

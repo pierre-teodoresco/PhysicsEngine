@@ -1,4 +1,4 @@
-#include "force.h"
+#include "particleForce.h"
 
 namespace pe
 {

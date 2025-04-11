@@ -17,6 +17,7 @@ namespace pe
         {
             // If it's the first frame, we need to initialize the previous position
             oldPosition = position - velocity * dt;
+            firstFrame = false;
         }
 
         Vector3 temp = position;
