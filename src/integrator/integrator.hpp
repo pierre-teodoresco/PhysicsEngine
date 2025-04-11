@@ -2,57 +2,69 @@
 
 #include "vector3/vector3.h"
 
-class Integrator
+namespace pe
 {
-public:
-    Integrator() = default;
-    virtual ~Integrator() = default;
-
-    virtual void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) = 0;
-};
-
-class Euler : public Integrator
-{
-public:
-    Euler() = default;
-    ~Euler() = default;
-
-    void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
+    /**
+     * @brief The integrator class
+     */
+    class Integrator
     {
-        // Update velocity using acceleration
-        velocity += acceleration * dt;
+    public:
+        Integrator() = default;
+        virtual ~Integrator() = default;
 
-        // Update position using velocity
-        position += velocity * dt + acceleration * 0.5f * dt * dt;
-    }
-};
+        virtual void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) = 0;
+    };
 
-class Verlet : public Integrator
-{
-public:
-    Verlet() = default;
-    ~Verlet() = default;
-
-    void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
+    /**
+     * @brief The Euler integrator class
+     */
+    class Euler : public Integrator
     {
-        if (firstFrame)
+    public:
+        Euler() = default;
+        ~Euler() = default;
+
+        void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
         {
-            // If it's the first frame, we need to initialize the previous position
-            oldPosition = position - velocity * dt;
+            // Update velocity using acceleration
+            velocity += acceleration * dt;
+
+            // Update position using velocity
+            position += velocity * dt + acceleration * 0.5f * dt * dt;
+        }
+    };
+
+    /**
+     * @brief The Verlet integrator class
+     */
+    class Verlet : public Integrator
+    {
+    public:
+        Verlet() = default;
+        ~Verlet() = default;
+
+        void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
+        {
+            if (firstFrame)
+            {
+                // If it's the first frame, we need to initialize the previous position
+                oldPosition = position - velocity * dt;
+            }
+
+            Vector3 temp = position;
+
+            // Update position using old position and acceleration
+            position = position * 2.0f - oldPosition + acceleration * dt * dt;
+
+            // Update velocity using new position
+            velocity = (position - oldPosition) / (2.0f * dt);
+
+            oldPosition = temp;
         }
 
-        Vector3 temp = position;
-
-        // Update position using old position and acceleration
-        position = position * 2.0f - oldPosition + acceleration * dt * dt;
-
-        // Update velocity using new position
-        velocity = (position - oldPosition) / (2.0f * dt);
-
-        oldPosition = temp;
-    }
-
-private:
-    Vector3 oldPosition;
-    bool firstFrame = true;
-};
+    private:
+        Vector3 oldPosition;
+        bool firstFrame = true;
+    };
+}

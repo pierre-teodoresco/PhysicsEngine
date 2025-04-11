@@ -15,7 +15,7 @@ public:
     void render(sf::RenderWindow &window) override;
     void update(sf::RenderWindow &window, float dt) override;
 
-    static constexpr Vector3 GRAVITY = {0, 9.81f, 0};
+    static constexpr pe::Vector3 GRAVITY = {0, 9.81f, 0};
 
 private:
     /**
@@ -24,6 +24,6 @@ private:
      */
     void gatherMouseInput(sf::RenderWindow &window);
 
-    std::vector<Particle> particles;
+    std::vector<pe::Particle> particles;
     bool wasMousePressed = false; // allow to avoid creating multiple particles when the mouse button is held
 };

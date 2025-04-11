@@ -23,7 +23,7 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     }
 
     // remove particles that are out of the window
-    auto isOutside = [&](const Particle &p)
+    auto isOutside = [&](const pe::Particle &p)
     {
         return (p.getPosition().getX() > window.getSize().x ||
                 p.getPosition().getY() > window.getSize().y);
@@ -43,18 +43,18 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
     if (isMousePressed && !wasMousePressed)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        Vector3 clickPosition = {float(mousePos.x), float(mousePos.y), 0.0f};
+        pe::Vector3 clickPosition = {float(mousePos.x), float(mousePos.y), 0.0f};
 
-        Vector3 bottomLeftCorner = Vector3(.0f, window.getSize().y, .0f);
+        pe::Vector3 bottomLeftCorner = pe::Vector3(.0f, window.getSize().y, .0f);
 
         // get the vector from the bottom left corner of the window to the mouse position
-        Vector3 direction = clickPosition - bottomLeftCorner;
+        pe::Vector3 direction = clickPosition - bottomLeftCorner;
 
         // create an integrator for the particle
-        auto integrator = std::make_shared<Verlet>();
+        auto integrator = std::make_shared<pe::Verlet>();
 
         // create a new particle at the bottom left corner of the window with a velocity in the direction of the mouse
-        particles.emplace_back(Particle(bottomLeftCorner, direction, Vector3::zero(), 1.f, integrator));
+        particles.emplace_back(pe::Particle(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f, integrator));
     }
 
     wasMousePressed = isMousePressed;
