@@ -9,7 +9,6 @@
 class Vector3
 {
 public:
-
     /**
      * @brief Construct a new Vector3 object
      */
@@ -27,7 +26,7 @@ public:
      * @brief Get the zero vector
      * @return The zero vector
      */
-    static Vector3 zero() { return { }; }
+    static Vector3 zero() { return {}; }
 
     /**
      * @brief Get the x component
