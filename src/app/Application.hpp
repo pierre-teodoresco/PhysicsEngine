@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include "game/game.h"
-#include "game/balistic.h"
+#include "scenes/Scene.hpp"
+#include "scenes/BalisticScene.hpp"
 
 /**
  * @brief The main application class
@@ -12,7 +12,7 @@
 class Application
 {
 public:
-    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), game{std::make_shared<Balistic>()} {  }
+    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), game{std::make_shared<Balistic>()} {}
     ~Application() = default;
 
     /**
@@ -21,9 +21,9 @@ public:
     void run();
 
     static constexpr auto TITLE{"Physics Engine - Balistic"};
-    static constexpr auto WIDTH {1920u};
-    static constexpr auto HEIGHT {1080u};
-    static constexpr auto UPS {144u}; // Update Per Second
+    static constexpr auto WIDTH{1920u};
+    static constexpr auto HEIGHT{1080u};
+    static constexpr auto UPS{144u}; // Update Per Second
 
 private:
     /**
