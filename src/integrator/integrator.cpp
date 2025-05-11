@@ -1,23 +1,8 @@
-#pragma once
+#include "integrator.h"
 
-#include "vector3/vector3.h"
-
-class Integrator
+namespace pe
 {
-public:
-    Integrator() = default;
-    virtual ~Integrator() = default;
-
-    virtual void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) = 0;
-};
-
-class Euler : public Integrator
-{
-public:
-    Euler() = default;
-    ~Euler() = default;
-
-    void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
+    void Euler::integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration)
     {
         // Update velocity using acceleration
         velocity += acceleration * dt;
@@ -25,20 +10,14 @@ public:
         // Update position using velocity
         position += velocity * dt + acceleration * 0.5f * dt * dt;
     }
-};
 
-class Verlet : public Integrator
-{
-public:
-    Verlet() = default;
-    ~Verlet() = default;
-
-    void integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration) override
+    void Verlet::integrate(float dt, Vector3 &position, Vector3 &velocity, Vector3 &acceleration)
     {
         if (firstFrame)
         {
             // If it's the first frame, we need to initialize the previous position
             oldPosition = position - velocity * dt;
+            firstFrame = false;
         }
 
         Vector3 temp = position;
@@ -51,8 +30,4 @@ public:
 
         oldPosition = temp;
     }
-
-private:
-    Vector3 oldPosition;
-    bool firstFrame = true;
-};
+}
