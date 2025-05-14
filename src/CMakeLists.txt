@@ -7,7 +7,7 @@ add_library(engine
     physics/CircleCollider.cpp
     maths/Vector3.cpp
 )
-
+target_link_libraries(engine PRIVATE SFML::Graphics)
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(engine PRIVATE ${MY_COMPILE_OPTIONS})
 
@@ -15,7 +15,7 @@ target_compile_options(engine PRIVATE ${MY_COMPILE_OPTIONS})
 add_library(scene
     scenes/BalisticScene.cpp
 )
-target_link_libraries(scene PRIVATE engine)
+target_link_libraries(scene PRIVATE SFML::Graphics engine)
 
 # Crée une bibliothèque d'application (boucle principale)
 add_library(application

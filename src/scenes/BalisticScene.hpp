@@ -26,7 +26,7 @@ private:
 
     std::vector<std::shared_ptr<pe::RigidBody>> bodies;
     pe::RigidBodyForceRegistry forceRegitry;
-    std::unique_ptr<pe::RigidBodyGravity> gravity = std::make_unique<pe::RigidBodyGravity>();
+    std::shared_ptr<pe::RigidBodyGravity> gravity = std::make_shared<pe::RigidBodyGravity>();
     std::unique_ptr<pe::Integrator> integrator = std::make_unique<pe::EulerIntegrator>();
     bool wasMousePressed = false; // allow to avoid creating multiple particles when the mouse button is held
 };

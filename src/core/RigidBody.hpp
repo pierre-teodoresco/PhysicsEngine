@@ -1,8 +1,8 @@
 #pragma once
 
 #include "maths/Vector3.hpp"
-#include <memory>
 #include "graphics/Renderer.hpp"
+#include <memory>
 
 namespace pe
 {
@@ -21,7 +21,11 @@ namespace pe
               acceleration(acceleration),
               inverseMass(1.0f / mass) {};
 
-        ~RigidBody() = default;
+        ~RigidBody()
+        {
+            renderer = nullptr;
+            delete renderer;
+        }
 
         /**
          * @brief Compute the force applied to the RigidBody
@@ -55,9 +59,9 @@ namespace pe
          * @brief Set a renderer to the body
          * @param renderer smart pointer to the new renderer for the body
          */
-        void setRenderer(std::unique_ptr<Renderer> renderer)
+        void setRenderer(Renderer *p_r)
         {
-            this->renderer = std::move(renderer);
+            this->renderer = p_r;
         }
 
     public:
@@ -66,6 +70,6 @@ namespace pe
         Vector3 acceleration{};
         float inverseMass{1.f};
 
-        std::unique_ptr<Renderer> renderer = nullptr;
+        Renderer *renderer = nullptr;
     };
 }

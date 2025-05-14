@@ -1,13 +1,14 @@
 #include "BalisticScene.hpp"
 #include <iostream>
 #include <memory>
+#include "graphics/CircleRenderer.hpp"
 
 void Balistic::render(sf::RenderWindow &window)
 {
     // render the particles
     for (const auto &rb : bodies)
     {
-        rb->renderer->draw(window);
+        rb->renderer->draw(window, *rb);
     }
 }
 
@@ -29,8 +30,8 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     // remove bodies that are out of the window
     auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
     {
-        return (rb->getPosition().getX() > window.getSize().x ||
-                rb->getPosition().getY() > window.getSize().y);
+        return (rb->position.getX() > window.getSize().x ||
+                rb->position.getY() > window.getSize().y);
     };
 
     bodies.erase(std::remove_if(bodies.begin(), bodies.end(), isOutside), bodies.end());
@@ -56,8 +57,8 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
         pe::RigidBody rb(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
-        rb.setRenderer(std::make_unique<CircleRenderer>(5.f, sf::Color::White));
-        particles.emplace_back(std::make_shared<pe::RigidBody>(rb));
+        rb.setRenderer(new CircleRenderer(5.f, sf::Color::White));
+        bodies.emplace_back(std::make_shared<pe::RigidBody>(rb));
     }
 
     wasMousePressed = isMousePressed;

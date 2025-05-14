@@ -1,5 +1,11 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
-#include "core/RigidBody.hpp"
+
+namespace pe
+{
+    class RigidBody; // Forward declaration
+}
 
 class Renderer
 {

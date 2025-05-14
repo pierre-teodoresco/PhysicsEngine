@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <memory>
 #include "RigidBody.hpp"
 
 namespace pe
@@ -12,7 +13,7 @@ namespace pe
     class Integrator
     {
     public:
-        virtual void integrate(std::vector<RigidBody *> &bodies, float dt) = 0;
+        virtual void integrate(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt) = 0;
         virtual ~Integrator() = default;
     };
 
@@ -22,9 +23,9 @@ namespace pe
     class EulerIntegrator : public Integrator
     {
     public:
-        void integrate(std::vector<RigidBody *> &bodies, float dt) override
+        void integrate(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt) override
         {
-            for (auto *body : bodies)
+            for (auto &body : bodies)
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
@@ -45,16 +46,16 @@ namespace pe
     class VerletIntegrator : public Integrator
     {
     public:
-        void integrate(std::vector<RigidBody *> &bodies, float dt) override
+        void integrate(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt) override
         {
-            for (auto *body : bodies)
+            for (auto &body : bodies)
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
                     continue;
 
-                auto &init = initialized[body];
-                auto &oldPos = oldPositions[body];
+                auto &init = initialized[body.get()];
+                auto &oldPos = oldPositions[body.get()];
 
                 if (!init)
                 {
