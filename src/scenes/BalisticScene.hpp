@@ -2,10 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "game.h"
-#include "particle/particle.h"
-#include "vector3/vector3.h"
-#include "force/particleForce.h"
+#include "Scene.hpp"
+#include "core/RigidBody.hpp"
+#include "maths/Vector3.hpp"
+#include "core/Force.hpp"
+#include "core/Integrator.hpp"
 
 /**
  * @brief Demo game that simulates a balistic trajectory of particles
@@ -23,8 +24,9 @@ private:
      */
     void gatherMouseInput(sf::RenderWindow &window);
 
-    std::vector<std::shared_ptr<pe::Particle>> particles;
-    pe::ParticleForceRegistry forceRegitry;
-    std::shared_ptr<pe::ParticleGravity> gravity = std::make_shared<pe::ParticleGravity>();
+    std::vector<std::shared_ptr<pe::RigidBody>> bodies;
+    pe::RigidBodyForceRegistry forceRegitry;
+    std::shared_ptr<pe::RigidBodyGravity> gravity = std::make_shared<pe::RigidBodyGravity>();
+    std::unique_ptr<pe::Integrator> integrator = std::make_unique<pe::EulerIntegrator>();
     bool wasMousePressed = false; // allow to avoid creating multiple particles when the mouse button is held
 };
