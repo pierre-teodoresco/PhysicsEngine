@@ -48,17 +48,17 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
     if (isMousePressed && !wasMousePressed)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        pe::Vector3 clickPosition = {float(mousePos.x), float(mousePos.y), 0.0f};
+        pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
 
-        pe::Vector3 bottomLeftCorner = pe::Vector3(.0f, window.getSize().y, .0f);
+        pe::Vector3 bottomLeftCorner{.0f, window.getSize().y, .0f};
 
         // get the vector from the bottom left corner of the window to the mouse position
         pe::Vector3 direction = clickPosition - bottomLeftCorner;
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
-        pe::RigidBody rb(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
-        rb.setRenderer(std::make_shared<CircleRenderer>(5.f, sf::Color::White));
-        bodies.emplace_back(std::make_shared<pe::RigidBody>(rb));
+        auto rb = std::make_shared<pe::RigidBody>(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
+        rb->setRenderer(std::make_unique<CircleRenderer>(5.f, sf::Color::White));
+        bodies.emplace_back(rb);
     }
 
     wasMousePressed = isMousePressed;

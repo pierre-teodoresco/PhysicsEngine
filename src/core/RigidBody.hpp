@@ -51,11 +51,11 @@ namespace pe
 
         /**
          * @brief Set a renderer to the body
-         * @param renderer shared pointer to the new renderer for the body
+         * @param renderer unique pointer to the new renderer for the body
          */
-        void setRenderer(std::shared_ptr<Renderer> r)
+        void setRenderer(std::unique_ptr<Renderer> r)
         {
-            this->renderer = r;
+            this->renderer = std::move(r);
         }
 
     public:
@@ -64,6 +64,6 @@ namespace pe
         Vector3 acceleration{};
         float inverseMass{1.f};
 
-        std::shared_ptr<Renderer> renderer;
+        std::unique_ptr<Renderer> renderer;
     };
 }
