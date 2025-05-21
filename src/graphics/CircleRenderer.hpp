@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Renderer.hpp"
 #include "core/RigidBody.hpp"
 #include <SFML/Graphics.hpp>

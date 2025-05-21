@@ -21,12 +21,6 @@ namespace pe
               acceleration(acceleration),
               inverseMass(1.0f / mass) {};
 
-        ~RigidBody()
-        {
-            renderer = nullptr;
-            delete renderer;
-        }
-
         /**
          * @brief Compute the force applied to the RigidBody
          * @param force The force applied to the RigidBody
@@ -57,11 +51,11 @@ namespace pe
 
         /**
          * @brief Set a renderer to the body
-         * @param renderer smart pointer to the new renderer for the body
+         * @param renderer shared pointer to the new renderer for the body
          */
-        void setRenderer(Renderer *p_r)
+        void setRenderer(std::shared_ptr<Renderer> r)
         {
-            this->renderer = p_r;
+            this->renderer = r;
         }
 
     public:
@@ -70,6 +64,6 @@ namespace pe
         Vector3 acceleration{};
         float inverseMass{1.f};
 
-        Renderer *renderer = nullptr;
+        std::shared_ptr<Renderer> renderer;
     };
 }

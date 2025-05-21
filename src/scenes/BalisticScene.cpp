@@ -57,7 +57,7 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
         pe::RigidBody rb(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
-        rb.setRenderer(new CircleRenderer(5.f, sf::Color::White));
+        rb.setRenderer(std::make_shared<CircleRenderer>(5.f, sf::Color::White));
         bodies.emplace_back(std::make_shared<pe::RigidBody>(rb));
     }
 
