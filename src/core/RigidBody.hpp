@@ -2,6 +2,7 @@
 
 #include "maths/Vector3.hpp"
 #include "graphics/Renderer.hpp"
+#include "collision/Collider.hpp"
 #include <memory>
 
 namespace pe
@@ -50,6 +51,15 @@ namespace pe
         }
 
         /**
+         * @brief Set a collider to the body
+         * @param collider unique pointer to the new collider for the body
+         */
+        void setCollider(std::unique_ptr<Collider> c)
+        {
+            this->collider = std::move(c);
+        }
+
+        /**
          * @brief Set a renderer to the body
          * @param renderer unique pointer to the new renderer for the body
          */
@@ -64,6 +74,7 @@ namespace pe
         Vector3 acceleration{};
         float inverseMass{1.f};
 
+        std::unique_ptr<Collider> collider;
         std::unique_ptr<Renderer> renderer;
     };
 }

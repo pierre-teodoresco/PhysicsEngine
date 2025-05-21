@@ -1,6 +1,8 @@
 #include "BalisticScene.hpp"
 #include <iostream>
 #include <memory>
+#include "collision/CollisionManager.hpp"
+#include "collision/CircleCollider.hpp"
 #include "graphics/CircleRenderer.hpp"
 
 void Balistic::render(sf::RenderWindow &window)
@@ -27,6 +29,8 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     // clear registry
     forceRegitry.clear();
 
+    pe::CollisionManager::detectAndResolveCollisions(bodies);
+
     // remove bodies that are out of the window
     auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
     {
@@ -50,14 +54,16 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
 
-        pe::Vector3 bottomLeftCorner{.0f, window.getSize().y, .0f};
+        pe::Vector3 bottomLeftCorner{.0f, static_cast<float>(window.getSize().y), .0f};
 
         // get the vector from the bottom left corner of the window to the mouse position
         pe::Vector3 direction = clickPosition - bottomLeftCorner;
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
         auto rb = std::make_shared<pe::RigidBody>(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
-        rb->setRenderer(std::make_unique<CircleRenderer>(5.f, sf::Color::White));
+        rb->setCollider(std::make_unique<pe::CircleCollider>(50.f));
+        rb->setRenderer(std::make_unique<CircleRenderer>(50.f, sf::Color::White));
+
         bodies.emplace_back(rb);
     }
 

@@ -3,8 +3,6 @@ include(AddSFML)
 # Crée une bibliothèque pour le moteur (core, physics, maths)
 add_library(engine
     core/Force.cpp
-    physics/Collider.cpp
-    physics/CircleCollider.cpp
     maths/Vector3.cpp
 )
 target_link_libraries(engine PRIVATE SFML::Graphics)
