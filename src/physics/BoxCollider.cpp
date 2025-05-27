@@ -1,7 +1,7 @@
 #include "BoxCollider.hpp"
 #include "SphereCollider.hpp"
 #include "maths/Vector3.hpp"
-#include "core/RigidBody.hpp"
+#include "RigidBody.hpp"
 
 namespace pe
 {

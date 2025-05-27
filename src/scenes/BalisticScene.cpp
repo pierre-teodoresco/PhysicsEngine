@@ -1,8 +1,8 @@
 #include "BalisticScene.hpp"
 #include <iostream>
 #include <memory>
-#include "collision/CollisionManager.hpp"
-#include "collision/SphereCollider.hpp"
+#include "physics/CollisionManager.hpp"
+#include "physics/SphereCollider.hpp"
 #include "graphics/CircleRenderer.hpp"
 
 void Balistic::render(sf::RenderWindow &window)

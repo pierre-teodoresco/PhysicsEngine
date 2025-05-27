@@ -2,12 +2,11 @@
 
 #include <vector>
 #include <memory>
-#include "core/RigidBody.hpp"
-#include "collision/Collider.hpp"
+#include "RigidBody.hpp"
+#include "Collider.hpp"
 
 // Debug
 #include <iostream>
-#include "core/Force.hpp"
 
 namespace pe
 {
@@ -18,7 +17,7 @@ namespace pe
          * @brief Detect and resolve collisions between all bodies
          * @param bodies vector of shared pointers to RigidBody
          */
-        static void detectAndResolveCollisions(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt = 1.f / 144.f)
+        static void detectAndResolveCollisions(std::vector<std::shared_ptr<RigidBody>> &bodies)
         {
             for (size_t i = 0; i < bodies.size(); ++i)
             {
@@ -34,7 +33,7 @@ namespace pe
                             // DEBUG: Print collision information
                             std::cout << "Collision detected between body " << i << " and body " << j << std::endl;
 
-                            CollisionManager::resolveCollision(*a, *b, contact, dt);
+                            CollisionManager::resolveCollision(*a, *b, contact);
                         }
                     }
                 }
@@ -48,7 +47,7 @@ namespace pe
          * @param b RigidBody
          * @param contact ContactManifold containing collision information
          */
-        static void resolveCollision(RigidBody &a, RigidBody &b, ContactManifold &contact, float dt)
+        static void resolveCollision(RigidBody &a, RigidBody &b, ContactManifold &contact)
         {
             /* === Resolve only if necessary === */
             // If there is no collision, do nothing

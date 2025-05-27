@@ -1,9 +1,9 @@
 #include "BalldropScene.hpp"
 #include <iostream>
 #include <memory>
-#include "collision/CollisionManager.hpp"
-#include "collision/SphereCollider.hpp"
-#include "collision/BoxCollider.hpp"
+#include "physics/CollisionManager.hpp"
+#include "physics/SphereCollider.hpp"
+#include "physics/BoxCollider.hpp"
 #include "graphics/CircleRenderer.hpp"
 #include "graphics/RectangleRenderer.hpp"
 
@@ -53,7 +53,7 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
     // clear registry
     forceRegitry.clear();
 
-    pe::CollisionManager::detectAndResolveCollisions(bodies, dt);
+    pe::CollisionManager::detectAndResolveCollisions(bodies);
 
     // remove bodies that are out of the window
     auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)

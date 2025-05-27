@@ -1,5 +1,5 @@
 #include "RigidBody.hpp"
-#include "collision/Collider.hpp"
+#include "Collider.hpp"
 
 namespace pe
 {

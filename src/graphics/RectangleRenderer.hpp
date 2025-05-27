@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer.hpp"
-#include "core/RigidBody.hpp"
+#include "physics/RigidBody.hpp"
 #include <SFML/Graphics.hpp>
 
 class RectangleRenderer : public Renderer

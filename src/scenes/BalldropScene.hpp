@@ -3,10 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Scene.hpp"
-#include "core/RigidBody.hpp"
+#include "physics/RigidBody.hpp"
 #include "maths/Vector3.hpp"
-#include "core/Force.hpp"
-#include "core/Integrator.hpp"
+#include "physics/Force.hpp"
+#include "physics/Integrator.hpp"
 
 /**
  * @brief Demo game that simulates a balistic trajectory of particles

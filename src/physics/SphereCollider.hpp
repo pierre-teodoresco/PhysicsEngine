@@ -1,30 +1,29 @@
 #pragma once
 
-#include "collision/Collider.hpp"
+#include "Collider.hpp"
 
 // DEBUG
 #include <SFML/Graphics.hpp>
 
 namespace pe
 {
-    class BoxCollider : public Collider
+    class SphereCollider : public Collider
     {
     public:
-        float length, width, height, restitution;
+        float radius, restitution;
 
-        BoxCollider(float length, float width, float height, float restitution = 0.2f) : length(length), width(width), height(height), restitution(restitution) {}
+        SphereCollider(float radius, float restitution = 0.8f) : radius(radius), restitution(restitution) {}
 
-        // Main double dispatch
+        // Double dispatch principal
         ContactManifold isColliding(const Collider &other, const RigidBody &self, const RigidBody &otherBody) const override;
 
-        // Collision Box vs Sphere
+        // Collision Sphere vs Sphere
         ContactManifold isCollidingWithSphere(const SphereCollider &sphere, const RigidBody &self, const RigidBody &otherBody) const override;
 
-        // Collision Box vs Box (AABB)
+        // Collision Sphere vs Box
         ContactManifold isCollidingWithBox(const BoxCollider &box, const RigidBody &self, const RigidBody &otherBody) const override;
 
         // DEBUG
         void draw(sf::RenderWindow &window, const pe::RigidBody &body) const;
     };
-
 }
