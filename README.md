@@ -9,7 +9,17 @@ Ce projet est un moteur physique 2D développé en C++ dans le cadre d'un TP. Il
 
 ## Fonctionnalités
 
-L'application actuelle est une démonstration de simulation balistique avec collisions :
+L'application actuelle est une démonstration de chûtes de balles avec collisions :
+- L'utilisateur peut cliquer dans la fenêtre
+- Un clic crée une balle à l'emplacement du clic
+- Les balles tombent sous l'effet de la gravité
+- Les balles rebondissent entre elles de manière élastique
+- Les balles rebondissent sur un sol fixe
+- Les balles disparaissent lorsqu'elles sortent des limites de la fenêtre
+- Les bords rouges représentent les colliders
+- Les points rouge représentent la position des corps rigides
+
+Il y a aussi une démonstration de tir balistique :
 - L'utilisateur peut cliquer dans la fenêtre
 - Un clic crée un projectile au coin inférieur gauche de l'écran
 - La vitesse initiale du projectile est déterminée par la direction entre le point de départ et la position du clic
@@ -21,14 +31,14 @@ L'application actuelle est une démonstration de simulation balistique avec coll
 
 Le projet est structuré de manière modulaire :
 
-- `core/` : Composants fondamentaux du moteur physique
+- `physics/` : Composants fondamentaux du moteur physique
+  - `PhysicsContants` : Regroupe un ensemble de constantes physiques
   - `RigidBody` : Représente un corps rigide avec position, vitesse, accélération et masse
-  - `Force` : Gestion des forces (gravité, registre de forces)
+  - `Force` : Gestion des forces (gravité, frictions, registre de forces)
   - `Integrator` : Algorithmes d'intégration numérique (Euler, Verlet)
-
-- `collision/` : Système de détection et résolution des collisions
   - `Collider` : Interface pour les formes de collision
-  - `CircleCollider` : Implémentation de collision pour les cercles
+  - `SphereCollider` : Implémentation de collision pour les sphères
+  - `BoxCollider` : Implémentation de collision pour les parallélépipèdes rectangles
   - `CollisionManager` : Gestion des collisions entre corps rigides
 
 - `maths/` : Utilitaires mathématiques
@@ -36,11 +46,13 @@ Le projet est structuré de manière modulaire :
 
 - `graphics/` : Système de rendu
   - `Renderer` : Interface pour le rendu des corps
-  - `CircleRenderer` : Rendu des corps circulaires
+  - `CircleRenderer` : Rendu 2D des corps circulaires
+  - `BoxRenderer` : Rendu 2D des corps rectangulaires
 
 - `scenes/` : Scènes de démonstration
   - `Scene` : Interface pour les scènes
   - `BalisticScene` : Démo de trajectoire balistique
+  - `BalldropScene` : Démo de chute de balles
 
 - `app/` : Gestion de l'application
   - `Application` : Boucle principale, gestion de la fenêtre SFML
@@ -69,8 +81,7 @@ cmake --build build --target physics_engine
 ├── src/                    # Code source
 │   ├── CMakeLists.txt      # Configuration CMake pour src
 │   ├── app/                # Gestion de l'application
-│   ├── core/               # Composants fondamentaux
-│   ├── collision/          # Système de collision
+│   ├── physics/            # Composants physiques
 │   ├── graphics/           # Système de rendu
 │   ├── maths/              # Utilitaires mathématiques
 │   └── scenes/             # Scènes de démonstration
@@ -82,16 +93,16 @@ cmake --build build --target physics_engine
 1. **Créer une nouvelle Scène**
    - Créez une classe héritant de `Scene`
    - Implémentez `update` et `render`
-   - Modifiez `Application.hpp` pour utiliser votre scène
+   - Modifiez `Application.hpp` pour utiliser votre scène (constructeur de `Application`)
 
 2. **Gérer les Corps Rigides**
    - Créez des `RigidBody` avec position, vitesse et masse
-   - Ajoutez des colliders (ex: `CircleCollider`)
+   - Ajoutez des colliders (ex: `SphereCollider`)
    - Ajoutez des renderers (ex: `CircleRenderer`)
 
 3. **Appliquer des Forces**
-   - Utilisez `RigidBodyForceRegistry` pour gérer les forces
-   - Créez des générateurs de force héritant de `RigidBodyForceGenerator`
+   - Utilisez `ForceRegistry` pour gérer les forces
+   - Créez des générateurs de force héritant de `ForceGenerator`
    - Appliquez les forces via `applyForce`
 
 4. **Choisir un Intégrateur**

@@ -10,10 +10,10 @@
 Balldrop::Balldrop()
 {
     // create a ground
-    auto ground = std::make_shared<pe::RigidBody>(pe::Vector3(0.f, 1080.f - 100.f, 0.f), pe::Vector3(0.f, 0.f, 0.f), pe::Vector3(0.f, 0.f, 0.f));
+    auto ground = std::make_shared<pe::RigidBody>(pe::Vector3(1920.f * 0.2f, 1080.f * 0.9f, 0.f), pe::Vector3(0.f, 0.f, 0.f), pe::Vector3(0.f, 0.f, 0.f));
     ground->makeStatic(); // make the ground static
-    ground->setCollider(std::make_unique<pe::BoxCollider>(1920.f, 50.f, 0.f));
-    ground->setRenderer(std::make_unique<RectangleRenderer>(1920.f, 50.f, sf::Color::Green));
+    ground->setCollider(std::make_unique<pe::BoxCollider>(1920.f * 0.6f, 50.f, 0.f));
+    ground->setRenderer(std::make_unique<RectangleRenderer>(1920.f * 0.6f, 50.f, sf::Color::Green));
     bodies.emplace_back(ground);
 }
 
@@ -47,9 +47,6 @@ void Balldrop::render(sf::RenderWindow &window)
 
 void Balldrop::update(sf::RenderWindow &window, float dt)
 {
-    // print dt
-    std::cout << "dt: " << dt << " seconds" << std::endl;
-
     /* INPUTS */
     gatherMouseInput(window);
 
