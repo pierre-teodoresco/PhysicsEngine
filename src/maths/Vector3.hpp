@@ -66,6 +66,12 @@ namespace pe
         void normalize();
 
         /**
+         * @brief Normalized vector
+         * @return The normalized vector
+         */
+        [[nodiscard]] Vector3 normalized() const;
+
+        /**
          * @brief Multiply the vector by a scalar
          * @param scalar The scalar
          * @return The result

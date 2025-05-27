@@ -1,8 +1,8 @@
 #include "BalisticScene.hpp"
 #include <iostream>
 #include <memory>
-#include "collision/CollisionManager.hpp"
-#include "collision/CircleCollider.hpp"
+#include "physics/CollisionManager.hpp"
+#include "physics/SphereCollider.hpp"
 #include "graphics/CircleRenderer.hpp"
 
 void Balistic::render(sf::RenderWindow &window)
@@ -61,7 +61,7 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
         auto rb = std::make_shared<pe::RigidBody>(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
-        rb->setCollider(std::make_unique<pe::CircleCollider>(50.f));
+        rb->setCollider(std::make_unique<pe::SphereCollider>(50.f));
         rb->setRenderer(std::make_unique<CircleRenderer>(50.f, sf::Color::White));
 
         bodies.emplace_back(rb);

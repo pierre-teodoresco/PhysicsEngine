@@ -15,6 +15,17 @@ namespace pe
         }
     }
 
+    Vector3 Vector3::normalized() const
+    {
+        const float EPSILON = 1e-6f;
+        const auto n = norm();
+        if (std::fabs(n) > EPSILON)
+        {
+            return {x / n, y / n, z / n};
+        }
+        return {0.f, 0.f, 0.f}; // Return zero vector if norm is too small
+    }
+
     Vector3 Vector3::operator*(float scalar) const
     {
         return {x * scalar, y * scalar, z * scalar};

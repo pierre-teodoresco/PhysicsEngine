@@ -29,13 +29,23 @@ namespace pe
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
+                {
+                    // Reset accumulated force
+                    body->accumulatedForce = Vector3::zero();
                     continue;
+                }
+
+                // Update acceleration based on accumulated force and inverse mass
+                body->acceleration = body->accumulatedForce * body->inverseMass;
 
                 // Update velocity using acceleration
                 body->velocity += body->acceleration * dt;
 
                 // Update position using velocity
                 body->position += body->velocity * dt + body->acceleration * 0.5f * dt * dt;
+
+                // Reset accumulated force after integration
+                body->accumulatedForce = Vector3::zero();
             }
         }
     };
@@ -52,7 +62,14 @@ namespace pe
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
+                {
+                    // Reset accumulated force
+                    body->accumulatedForce = Vector3::zero();
                     continue;
+                }
+
+                // Update acceleration based on accumulated force and inverse mass
+                body->acceleration = body->accumulatedForce * body->inverseMass;
 
                 auto &init = initialized[body.get()];
                 auto &oldPos = oldPositions[body.get()];
@@ -72,6 +89,9 @@ namespace pe
                 body->velocity = (body->position - oldPos) / (2.0f * dt);
 
                 oldPos = temp;
+
+                // Reset accumulated force after integration
+                body->accumulatedForce = Vector3::zero();
             }
         }
 

@@ -4,21 +4,20 @@
 #include "physics/RigidBody.hpp"
 #include <SFML/Graphics.hpp>
 
-class CircleRenderer : public Renderer
+class RectangleRenderer : public Renderer
 {
 public:
-    CircleRenderer(float radius, sf::Color color) : radius(radius), color(color) {};
+    RectangleRenderer(float length, float width, sf::Color color) : length(length), width(width), color(color) {};
 
     void draw(sf::RenderWindow &window, const pe::RigidBody &body) override
     {
-        sf::CircleShape shape(radius);
+        sf::RectangleShape shape(sf::Vector2f(length, width));
         shape.setFillColor(color);
-        shape.setOrigin(sf::Vector2f(radius, radius)); // Set origin to center of circle
         shape.setPosition(sf::Vector2f(body.position.getX(), body.position.getY()));
         window.draw(shape);
     }
 
 private:
-    float radius;
+    float length, width;
     sf::Color color;
 };
