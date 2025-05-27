@@ -1,20 +1,44 @@
-#include "BalisticScene.hpp"
+#include "BalldropScene.hpp"
 #include <iostream>
 #include <memory>
 #include "collision/CollisionManager.hpp"
 #include "collision/SphereCollider.hpp"
+#include "collision/BoxCollider.hpp"
 #include "graphics/CircleRenderer.hpp"
+#include "graphics/RectangleRenderer.hpp"
 
-void Balistic::render(sf::RenderWindow &window)
+Balldrop::Balldrop()
+{
+    // create a ground
+    auto ground = std::make_shared<pe::RigidBody>(pe::Vector3(0.f, 1080.f - 100.f, 0.f), pe::Vector3(0.f, 0.f, 0.f), pe::Vector3(0.f, 0.f, 0.f));
+    ground->makeStatic(); // make the ground static
+    ground->setCollider(std::make_unique<pe::BoxCollider>(1920.f, 50.f, 0.f));
+    ground->setRenderer(std::make_unique<RectangleRenderer>(1920.f, 50.f, sf::Color::Green));
+    bodies.emplace_back(ground);
+}
+
+void Balldrop::render(sf::RenderWindow &window)
 {
     // render the particles
     for (const auto &rb : bodies)
     {
         rb->renderer->draw(window, *rb);
+        // DEBUG: draw the collider
+        if (rb->collider)
+        {
+            if (auto sphereCollider = dynamic_cast<pe::SphereCollider *>(rb->collider.get()))
+            {
+                sphereCollider->draw(window, *rb);
+            }
+            else if (auto boxCollider = dynamic_cast<pe::BoxCollider *>(rb->collider.get()))
+            {
+                boxCollider->draw(window, *rb);
+            }
+        }
     }
 }
 
-void Balistic::update(sf::RenderWindow &window, float dt)
+void Balldrop::update(sf::RenderWindow &window, float dt)
 {
     gatherMouseInput(window);
 
@@ -29,7 +53,7 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     // clear registry
     forceRegitry.clear();
 
-    pe::CollisionManager::detectAndResolveCollisions(bodies);
+    pe::CollisionManager::detectAndResolveCollisions(bodies, dt);
 
     // remove bodies that are out of the window
     auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
@@ -39,12 +63,9 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     };
 
     bodies.erase(std::remove_if(bodies.begin(), bodies.end(), isOutside), bodies.end());
-
-    // print the number of bodies
-    std::cout << "Number of bodies: " << bodies.size() << std::endl;
 }
 
-void Balistic::gatherMouseInput(sf::RenderWindow &window)
+void Balldrop::gatherMouseInput(sf::RenderWindow &window)
 {
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
@@ -54,13 +75,8 @@ void Balistic::gatherMouseInput(sf::RenderWindow &window)
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
 
-        pe::Vector3 bottomLeftCorner{.0f, static_cast<float>(window.getSize().y), .0f};
-
-        // get the vector from the bottom left corner of the window to the mouse position
-        pe::Vector3 direction = clickPosition - bottomLeftCorner;
-
-        // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
-        auto rb = std::make_shared<pe::RigidBody>(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);
+        // create a new rigidbody at the mouse position
+        auto rb = std::make_shared<pe::RigidBody>(clickPosition, pe::Vector3::zero(), pe::Vector3::zero(), 1.f);
         rb->setCollider(std::make_unique<pe::SphereCollider>(50.f));
         rb->setRenderer(std::make_unique<CircleRenderer>(50.f, sf::Color::White));
 

@@ -86,6 +86,6 @@ namespace pe
         }
 
     private:
-        Vector3 gravity{0.f, 9.81f, 0.f};
+        Vector3 gravity = {0.f, 9.81f, 0.f};
     };
 }

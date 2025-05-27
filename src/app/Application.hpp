@@ -5,14 +5,14 @@
 #include <memory>
 #include "scenes/Scene.hpp"
 #include "scenes/BalisticScene.hpp"
-
+#include "scenes/BalldropScene.hpp"
 /**
  * @brief The main application class
  */
 class Application
 {
 public:
-    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), game{std::make_shared<Balistic>()} {}
+    Application() : window(sf::VideoMode({WIDTH, HEIGHT}), TITLE), scene{std::make_unique<Balldrop>()} {}
     ~Application() = default;
 
     /**
@@ -44,6 +44,6 @@ private:
 
     sf::RenderWindow window;
 
-    // Game
-    std::shared_ptr<Game> game;
+    // Scene
+    std::unique_ptr<Scene> scene;
 };

@@ -11,9 +11,11 @@
 /**
  * @brief Demo game that simulates a balistic trajectory of particles
  */
-class Balistic : public Scene
+class Balldrop : public Scene
 {
 public:
+    Balldrop();
+
     void render(sf::RenderWindow &window) override;
     void update(sf::RenderWindow &window, float dt) override;
 

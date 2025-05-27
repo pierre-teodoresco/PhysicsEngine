@@ -37,14 +37,14 @@ void Application::render()
 {
     window.clear(sf::Color::Black);
 
-    // render the game
-    game->render(window);
+    // render the scene
+    scene->render(window);
 
     window.display();
 }
 
 void Application::update(float dt)
 {
-    // update the game
-    game->update(window, dt);
+    // update the scene
+    scene->update(window, dt);
 }
