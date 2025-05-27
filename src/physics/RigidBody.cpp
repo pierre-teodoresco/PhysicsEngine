@@ -1,5 +1,6 @@
 #include "RigidBody.hpp"
 #include "Collider.hpp"
+#include "PhysicsConstants.hpp"
 
 namespace pe
 {
@@ -21,7 +22,6 @@ namespace pe
 
     bool RigidBody::isStatic() const
     {
-        const float EPSILON = 1e-6f;
         return std::fabs(inverseMass) < EPSILON;
     }
 

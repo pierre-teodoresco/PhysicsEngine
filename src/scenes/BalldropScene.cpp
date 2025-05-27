@@ -23,6 +23,13 @@ void Balldrop::render(sf::RenderWindow &window)
     for (const auto &rb : bodies)
     {
         rb->renderer->draw(window, *rb);
+
+        // DEBUG: draw the position of the rigid body
+        sf::CircleShape positionMarker(5.f);
+        positionMarker.setFillColor(sf::Color::Red);
+        positionMarker.setPosition(sf::Vector2f(rb->position.getX() - 5.f, rb->position.getY() - 5.f));
+        window.draw(positionMarker);
+
         // DEBUG: draw the collider
         if (rb->collider)
         {
@@ -51,6 +58,8 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
     for (auto &rb : bodies)
     {
         forceRegitry.add(rb, gravity);
+        forceRegitry.add(rb, kineticFriction);
+        forceRegitry.add(rb, staticFriction);
         forceRegitry.updateForces(dt);
     }
 

@@ -106,6 +106,9 @@ namespace pe
             if (rb->isStatic())
                 return;
 
+            if (rb->velocity.norm() > EPSILON)
+                return; // Movement, no static friction
+
             // Normal force magnitude is the weight of the body
             float gravityMagnitude = GRAVITY * PIXELS_PER_METER;
             float normalForceMagnitude = rb->getMass() * gravityMagnitude;
@@ -149,9 +152,7 @@ namespace pe
             if (rb->isStatic())
                 return;
 
-            Vector3 velocity = rb->velocity;
-            const float EPSILON = 1e-6f;
-            if (velocity.norm() < EPSILON)
+            if (rb->velocity.norm() < EPSILON)
                 return; // No movement, no kinetic friction
 
             // Normal force magnitude is the weight of the body
@@ -159,7 +160,7 @@ namespace pe
             float normalForceMagnitude = rb->getMass() * gravityMagnitude;
 
             // Friction force: direction is opposite to velocity, magnitude is mu_k * |n|
-            Vector3 frictionDirection = -velocity.normalized();
+            Vector3 frictionDirection = -rb->velocity.normalized();
             Vector3 frictionForce = frictionDirection * coefficient * normalForceMagnitude;
 
             rb->applyForce(frictionForce);
