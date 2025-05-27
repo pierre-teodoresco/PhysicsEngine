@@ -25,8 +25,8 @@ private:
     void gatherMouseInput(sf::RenderWindow &window);
 
     std::vector<std::shared_ptr<pe::RigidBody>> bodies;
-    pe::RigidBodyForceRegistry forceRegitry;
-    std::shared_ptr<pe::RigidBodyGravity> gravity = std::make_shared<pe::RigidBodyGravity>();
+    pe::ForceRegistry forceRegitry;
+    std::shared_ptr<pe::Gravity> gravity = std::make_shared<pe::Gravity>();
     std::unique_ptr<pe::Integrator> integrator = std::make_unique<pe::EulerIntegrator>();
     bool wasMousePressed = false; // allow to avoid creating multiple particles when the mouse button is held
 };

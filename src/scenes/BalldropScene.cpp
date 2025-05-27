@@ -40,28 +40,36 @@ void Balldrop::render(sf::RenderWindow &window)
 
 void Balldrop::update(sf::RenderWindow &window, float dt)
 {
+    // print dt
+    std::cout << "dt: " << dt << " seconds" << std::endl;
+
+    /* INPUTS */
     gatherMouseInput(window);
 
+    /* INTEGRATION */
     // update the rbs
     for (auto &rb : bodies)
     {
         forceRegitry.add(rb, gravity);
         forceRegitry.updateForces(dt);
     }
-    integrator->integrate(bodies, dt);
 
-    // clear registry
+    // clear the force registry
     forceRegitry.clear();
 
+    // integrate the bodies
+    integrator->integrate(bodies, dt);
+
+    /* COLLISIONS */
     pe::CollisionManager::detectAndResolveCollisions(bodies);
 
+    /* OPTIMISATION */
     // remove bodies that are out of the window
     auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
     {
         return (rb->position.getX() > window.getSize().x ||
                 rb->position.getY() > window.getSize().y);
     };
-
     bodies.erase(std::remove_if(bodies.begin(), bodies.end(), isOutside), bodies.end());
 }
 

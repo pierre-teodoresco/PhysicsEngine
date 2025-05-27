@@ -53,6 +53,7 @@ namespace pe
         Vector3 position{};
         Vector3 velocity{};
         Vector3 acceleration{};
+        Vector3 accumulatedForce{};
         float inverseMass{1.f};
 
         std::unique_ptr<Collider> collider;

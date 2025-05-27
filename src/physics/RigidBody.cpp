@@ -11,7 +11,7 @@ namespace pe
 
     void RigidBody::applyForce(const Vector3 &force)
     {
-        acceleration += force * inverseMass;
+        accumulatedForce += force;
     }
 
     float RigidBody::getMass() const

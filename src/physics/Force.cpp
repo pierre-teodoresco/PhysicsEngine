@@ -2,30 +2,30 @@
 
 namespace pe
 {
-    void RigidBodyForceRegistry::add(std::shared_ptr<RigidBody> rb, std::shared_ptr<RigidBodyForceGenerator> fg)
+    void ForceRegistry::add(std::shared_ptr<RigidBody> rb, std::shared_ptr<ForceGenerator> fg)
     {
         registry.push_back({rb, fg});
     }
 
-    void RigidBodyForceRegistry::remove(std::shared_ptr<RigidBody> rb, std::shared_ptr<RigidBodyForceGenerator> fg)
+    void ForceRegistry::remove(std::shared_ptr<RigidBody> rb, std::shared_ptr<ForceGenerator> fg)
     {
         registry.erase(
             std::remove_if(
                 registry.begin(),
                 registry.end(),
-                [&](const RigidBodyForceRegistration &registration)
+                [&](const ForceRegistration &registration)
                 {
                     return registration.rb == rb && registration.fg == fg;
                 }),
             registry.end());
     }
 
-    void RigidBodyForceRegistry::clear()
+    void ForceRegistry::clear()
     {
         registry.clear();
     }
 
-    void RigidBodyForceRegistry::updateForces(float duration)
+    void ForceRegistry::updateForces(float duration)
     {
         for (auto entry : registry)
         {
