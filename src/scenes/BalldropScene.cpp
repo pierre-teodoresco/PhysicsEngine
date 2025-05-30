@@ -10,10 +10,10 @@
 Balldrop::Balldrop()
 {
     // create a ground
-    auto ground = std::make_shared<pe::RigidBody>(pe::Vector3(1920.f * 0.2f, 1080.f * 0.9f, 0.f), pe::Vector3(0.f, 0.f, 0.f), pe::Vector3(0.f, 0.f, 0.f));
+    auto ground = std::make_shared<pe::RigidBody>(pe::Vector3(1000.f * 0.2f, 800.f * 0.9f, 0.f), pe::Vector3(0.f, 0.f, 0.f), pe::Vector3(0.f, 0.f, 0.f));
     ground->makeStatic(); // make the ground static
-    ground->setCollider(std::make_unique<pe::BoxCollider>(1920.f * 0.6f, 50.f, 0.f));
-    ground->setRenderer(std::make_unique<RectangleRenderer>(1920.f * 0.6f, 50.f, sf::Color::Green));
+    ground->setCollider(std::make_unique<pe::BoxCollider>(1000.f * 0.6f, 50.f, 0.f));
+    ground->setRenderer(std::make_unique<RectangleRenderer>(1000.f * 0.6f, 50.f, sf::Color::Green));
     bodies.emplace_back(ground);
 }
 
