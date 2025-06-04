@@ -25,7 +25,7 @@ namespace pe
     public:
         void integrate(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt) override
         {
-            for (auto &body : bodies)
+            for (const auto &body : bodies)
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
