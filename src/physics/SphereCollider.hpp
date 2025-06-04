@@ -12,7 +12,7 @@ namespace pe
     public:
         float radius, restitution;
 
-        SphereCollider(float radius, float restitution = 0.8f) : radius(radius), restitution(restitution) {}
+        explicit SphereCollider(float radius, float restitution = 0.8f) : radius(radius), restitution(restitution) {}
 
         // Double dispatch principal
         [[nodiscard]] ContactManifold isColliding(const Collider &other, const RigidBody &self, const RigidBody &otherBody) const override;
