@@ -86,8 +86,8 @@ void Balldrop::gatherMouseInput(const sf::RenderWindow& window)
     // gather mouse input
     if (isMousePressed && !wasMousePressed)
     {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
+        const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        const pe::Vector3 clickPosition{static_cast<float>(mousePos.x), static_cast<float>(mousePos.y), 0.0f};
 
         // create a new rigidbody at the mouse position
         auto rb = std::make_shared<pe::RigidBody>(clickPosition, pe::Vector3::zero(), pe::Vector3::zero(), 1.f);
