@@ -19,10 +19,9 @@ namespace pe
 
         // Vector from sphere center to other sphere center
         Vector3 delta = self.position - otherBody.position;
-        float dist = delta.norm();
 
         // Check if the spheres are colliding
-        if (dist <= (this->radius + sphere.radius))
+        if (const float dist = delta.norm(); dist <= (this->radius + sphere.radius))
         {
             result.colliding = true;
             // Normal from sphere to sphere
@@ -56,9 +55,9 @@ namespace pe
 
         // Vector from closest point to sphere center
         Vector3 delta = self.position - closestPoint;
-        float dist = delta.norm();
 
-        if (dist <= radius)
+
+        if (const float dist = delta.norm(); dist <= radius)
         {
             result.colliding = true;
             result.normal = delta.normalized();
