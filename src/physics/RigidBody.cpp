@@ -4,7 +4,7 @@
 
 namespace pe
 {
-    RigidBody::RigidBody(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass)
+    RigidBody::RigidBody(const Vector3& position, const Vector3& velocity, const Vector3& acceleration, float mass)
         : position(position),
           velocity(velocity),
           acceleration(acceleration),
