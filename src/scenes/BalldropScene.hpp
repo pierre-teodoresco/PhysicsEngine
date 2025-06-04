@@ -24,7 +24,7 @@ private:
      * @brief Gather mouse input
      * @param window application window
      */
-    void gatherMouseInput(sf::RenderWindow &window);
+    void gatherMouseInput(const sf::RenderWindow& window);
 
     std::vector<std::shared_ptr<pe::RigidBody>> bodies;
     pe::ForceRegistry forceRegitry;

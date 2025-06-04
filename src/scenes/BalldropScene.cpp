@@ -79,7 +79,7 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
     bodies.erase(std::remove_if(bodies.begin(), bodies.end(), isOutside), bodies.end());
 }
 
-void Balldrop::gatherMouseInput(sf::RenderWindow &window)
+void Balldrop::gatherMouseInput(const sf::RenderWindow& window)
 {
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
