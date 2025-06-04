@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.10)
 project(CMakeSFMLProject LANGUAGES CXX)
 
 option(BUILD_TESTS "Build tests" ON)
 option(ENABLE_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug, Release, RelWithDebInfo, MinSizeRel)" FORCE)
+endif ()
+set(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "Postfix for debug builds")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
 
 # compile options for all targets depending on the compiler and the system
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
