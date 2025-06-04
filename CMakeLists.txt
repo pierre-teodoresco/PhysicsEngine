@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.28)
 project(CMakeSFMLProject LANGUAGES CXX)
 
 option(BUILD_TESTS "Build tests" ON)
 option(ENABLE_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 # compile options for all targets depending on the compiler and the system
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
@@ -34,6 +35,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(AddSFML)
+
 add_subdirectory(src)
 
 add_executable(physics_engine main.cpp)

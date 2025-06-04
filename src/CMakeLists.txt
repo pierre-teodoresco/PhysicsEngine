@@ -23,6 +23,6 @@ target_link_libraries(scene PRIVATE SFML::Graphics engine)
 add_library(application
     app/Application.cpp
 )
-target_link_libraries(application PRIVATE SFML::Graphics engine scene)
+target_link_libraries(application PUBLIC  SFML::Graphics scene PRIVATE engine)
 target_include_directories(application PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(application PRIVATE ${MY_COMPILE_OPTIONS})
