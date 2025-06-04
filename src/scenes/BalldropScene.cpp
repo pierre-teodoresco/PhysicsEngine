@@ -91,8 +91,9 @@ void Balldrop::gatherMouseInput(const sf::RenderWindow& window)
 
         // create a new rigidbody at the mouse position
         auto rb = std::make_shared<pe::RigidBody>(clickPosition, pe::Vector3::zero(), pe::Vector3::zero(), 1.f);
-        rb->setCollider(std::make_unique<pe::SphereCollider>(50.f));
-        rb->setRenderer(std::make_unique<CircleRenderer>(50.f, sf::Color::White));
+        const auto sphereRadius = 50.f;
+        rb->setCollider(std::make_unique<pe::SphereCollider>(sphereRadius));
+        rb->setRenderer(std::make_unique<CircleRenderer>(sphereRadius, sf::Color::White));
 
         bodies.emplace_back(rb);
     }
