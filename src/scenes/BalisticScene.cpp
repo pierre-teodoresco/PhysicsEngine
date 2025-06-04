@@ -44,7 +44,7 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     std::cout << "Number of bodies: " << bodies.size() << std::endl;
 }
 
-void Balistic::gatherMouseInput(sf::RenderWindow &window)
+void Balistic::gatherMouseInput(const sf::RenderWindow& window)
 {
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
