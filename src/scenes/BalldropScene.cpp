@@ -71,7 +71,7 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
 
     /* OPTIMISATION */
     // remove bodies that are out of the window
-    auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
+    auto isOutside = [&](const std::shared_ptr<pe::RigidBody>& rb)
     {
         return (rb->position.getX() > window.getSize().x ||
                 rb->position.getY() > window.getSize().y);
