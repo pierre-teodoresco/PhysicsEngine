@@ -32,7 +32,7 @@ namespace pe
          * @brief True if the body is static (can't be moved)
          * @return true / false based on inverse mass
          */
-        bool isStatic() const;
+        [[nodiscard]] bool isStatic() const;
 
         /**
          * @brief Make the body static (can't be moved)
