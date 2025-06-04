@@ -80,7 +80,7 @@ namespace pe
                     init = true;
                 }
 
-                Vector3 temp = body->position;
+                const Vector3 temp = body->position;
 
                 // Verlet position update
                 body->position = body->position * 2.0f - oldPos + body->acceleration * dt * dt;
