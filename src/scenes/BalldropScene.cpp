@@ -52,7 +52,7 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
 
     /* INTEGRATION */
     // update the rbs
-    for (auto &rb : bodies)
+    for (const auto &rb : bodies)
     {
         forceRegitry.add(rb, gravity);
         forceRegitry.add(rb, kineticFriction);
