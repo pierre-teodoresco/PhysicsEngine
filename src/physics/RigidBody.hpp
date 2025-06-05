@@ -14,7 +14,7 @@ namespace pe
     class RigidBody
     {
     public:
-        RigidBody(const Vector3& position, const Vector3& velocity, const Vector3& acceleration, float mass = -1.0f);
+        RigidBody(const Vector3 &position, const Vector3 &velocity, const Vector3 &acceleration, float mass = -1.0f);
 
         /**
          * @brief Compute the force applied to the RigidBody
@@ -50,7 +50,7 @@ namespace pe
         void setRenderer(std::unique_ptr<Renderer> r);
 
     public:
-        Vector3 position{};
+        Vector3 position{}, oldPosition{};
         Vector3 velocity{};
         Vector3 acceleration{};
         Vector3 accumulatedForce{};

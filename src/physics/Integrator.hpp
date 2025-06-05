@@ -71,32 +71,19 @@ namespace pe
                 // Update acceleration based on accumulated force and inverse mass
                 body->acceleration = body->accumulatedForce * body->inverseMass;
 
-                auto &init = initialized[body.get()];
-                auto &oldPos = oldPositions[body.get()];
-
-                if (!init)
-                {
-                    oldPos = body->position - body->velocity * dt;
-                    init = true;
-                }
-
                 const Vector3 temp = body->position;
 
                 // Verlet position update
-                body->position = body->position * 2.0f - oldPos + body->acceleration * dt * dt;
+                body->position = body->position * 2.0f - body->oldPosition + body->acceleration * dt * dt;
 
-                // Verlet velocity estimation
-                body->velocity = (body->position - oldPos) / (2.0f * dt);
+                // Verlet velocity estimation (using current and previous position)
+                body->velocity = (body->position - temp) / dt;
 
-                oldPos = temp;
+                body->oldPosition = temp;
 
                 // Reset accumulated force after integration
                 body->accumulatedForce = Vector3::zero();
             }
         }
-
-    private:
-        std::unordered_map<RigidBody *, Vector3> oldPositions;
-        std::unordered_map<RigidBody *, bool> initialized;
     };
 }

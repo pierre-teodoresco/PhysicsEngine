@@ -4,11 +4,15 @@
 
 namespace pe
 {
-    RigidBody::RigidBody(const Vector3& position, const Vector3& velocity, const Vector3& acceleration, float mass)
+    RigidBody::RigidBody(const Vector3 &position, const Vector3 &velocity, const Vector3 &acceleration, float mass)
         : position(position),
           velocity(velocity),
           acceleration(acceleration),
-          inverseMass(1.0f / mass) {};
+          inverseMass(1.0f / mass)
+    {
+        // Initialize old position to current position for the first pass of the Verlet integrator
+        oldPosition = position;
+    };
 
     void RigidBody::applyForce(const Vector3 &force)
     {

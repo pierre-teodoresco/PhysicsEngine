@@ -24,13 +24,13 @@ private:
      * @brief Gather mouse input
      * @param window application window
      */
-    void gatherMouseInput(const sf::RenderWindow& window);
+    void gatherMouseInput(const sf::RenderWindow &window);
 
     std::vector<std::shared_ptr<pe::RigidBody>> bodies;
     pe::ForceRegistry forceRegistry;
     std::shared_ptr<pe::StaticFriction> staticFriction = std::make_shared<pe::StaticFriction>(0.3f);
     std::shared_ptr<pe::KineticFriction> kineticFriction = std::make_shared<pe::KineticFriction>(0.1f);
     std::shared_ptr<pe::Gravity> gravity = std::make_shared<pe::Gravity>();
-    std::unique_ptr<pe::Integrator> integrator = std::make_unique<pe::EulerIntegrator>();
-    bool wasMousePressed = false; // allow to avoid creating multiple particles when the mouse button is held
+    std::unique_ptr<pe::Integrator> integrator = std::make_unique<pe::VerletIntegrator>();
+    bool wasMousePressed = false;
 };
