@@ -30,9 +30,9 @@ namespace pe
         Vector3 maxB = otherBody.position + Vector3(box.length / 2, box.width / 2, box.height / 2);
 
         // Check for overlap on all axes
-        bool overlapX = (minA.getX() <= maxB.getX() && maxA.getX() >= minB.getX());
-        bool overlapY = (minA.getY() <= maxB.getY() && maxA.getY() >= minB.getY());
-        bool overlapZ = (minA.getZ() <= maxB.getZ() && maxA.getZ() >= minB.getZ());
+        const bool overlapX = (minA.getX() <= maxB.getX() && maxA.getX() >= minB.getX());
+        const bool overlapY = (minA.getY() <= maxB.getY() && maxA.getY() >= minB.getY());
+        const bool overlapZ = (minA.getZ() <= maxB.getZ() && maxA.getZ() >= minB.getZ());
 
         if (overlapX && overlapY && overlapZ)
         {
@@ -40,9 +40,9 @@ namespace pe
 
             // Calculate penetration depth and collision normal (for AABBs)
             // Find the axis of minimum penetration
-            float penX = std::min(maxA.getX(), maxB.getX()) - std::max(minA.getX(), minB.getX());
-            float penY = std::min(maxA.getY(), maxB.getY()) - std::max(minA.getY(), minB.getY());
-            float penZ = std::min(maxA.getZ(), maxB.getZ()) - std::max(minA.getZ(), minB.getZ());
+            const float penX = std::min(maxA.getX(), maxB.getX()) - std::max(minA.getX(), minB.getX());
+            const float penY = std::min(maxA.getY(), maxB.getY()) - std::max(minA.getY(), minB.getY());
+            const float penZ = std::min(maxA.getZ(), maxB.getZ()) - std::max(minA.getZ(), minB.getZ());
 
             // Find the axis with the smallest penetration
             float minPenetration = penX;
@@ -59,8 +59,8 @@ namespace pe
             }
 
             // Determine the direction of the normal (from A to B)
-            Vector3 centerA = self.position;
-            Vector3 centerB = otherBody.position;
+            const Vector3 centerA = self.position;
+            const Vector3 centerB = otherBody.position;
             Vector3 dir = centerB - centerA;
             if (normal.dot(dir) < 0)
                 normal = -normal;
@@ -69,9 +69,9 @@ namespace pe
             result.penetration = minPenetration;
 
             // Contact point: center of the overlapping region (approximation)
-            float contactX = std::max(minA.getX(), minB.getX()) + penX * 0.5f;
-            float contactY = std::max(minA.getY(), minB.getY()) + penY * 0.5f;
-            float contactZ = std::max(minA.getZ(), minB.getZ()) + penZ * 0.5f;
+            const float contactX = std::max(minA.getX(), minB.getX()) + penX * 0.5f;
+            const float contactY = std::max(minA.getY(), minB.getY()) + penY * 0.5f;
+            const float contactZ = std::max(minA.getZ(), minB.getZ()) + penZ * 0.5f;
             result.contactPoint = Vector3(contactX, contactY, contactZ);
 
             // Set restitution based on the box with the higher restitution value

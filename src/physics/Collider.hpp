@@ -29,7 +29,7 @@ namespace pe
          * @param otherBody The RigidBody that owns the other collider
          * @return true if colliding, false otherwise
          */
-        virtual ContactManifold isColliding(const Collider &other, const RigidBody &self, const RigidBody &otherBody) const = 0;
+        [[nodiscard]] virtual ContactManifold isColliding(const Collider &other, const RigidBody &self, const RigidBody &otherBody) const = 0;
 
         // Double dispatch: specific collision tests
 
@@ -40,7 +40,7 @@ namespace pe
          * @param otherBody The RigidBody that owns the SphereCollider
          * @return true if colliding, false otherwise
          */
-        virtual ContactManifold isCollidingWithSphere(const class SphereCollider &sphere, const RigidBody &self, const RigidBody &otherBody) const = 0;
+        [[nodiscard]] virtual ContactManifold isCollidingWithSphere(const class SphereCollider &sphere, const RigidBody &self, const RigidBody &otherBody) const = 0;
 
         /**
          * @brief Test if this collider is colliding with a BoxCollider
@@ -49,6 +49,6 @@ namespace pe
          * @param otherBody The RigidBody that owns the BoxCollider
          * @return true if colliding, false otherwise
          */
-        virtual ContactManifold isCollidingWithBox(const class BoxCollider &box, const RigidBody &self, const RigidBody &otherBody) const = 0;
+        [[nodiscard]] virtual ContactManifold isCollidingWithBox(const class BoxCollider &box, const RigidBody &self, const RigidBody &otherBody) const = 0;
     };
 }

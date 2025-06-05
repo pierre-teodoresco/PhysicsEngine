@@ -14,7 +14,7 @@ namespace pe
     class RigidBody
     {
     public:
-        RigidBody(Vector3 position, Vector3 velocity, Vector3 acceleration, float mass = -1.0f);
+        RigidBody(const Vector3& position, const Vector3& velocity, const Vector3& acceleration, float mass = -1.0f);
 
         /**
          * @brief Compute the force applied to the RigidBody
@@ -32,7 +32,7 @@ namespace pe
          * @brief True if the body is static (can't be moved)
          * @return true / false based on inverse mass
          */
-        bool isStatic() const;
+        [[nodiscard]] bool isStatic() const;
 
         /**
          * @brief Make the body static (can't be moved)

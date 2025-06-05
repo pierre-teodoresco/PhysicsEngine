@@ -5,21 +5,12 @@ namespace pe
 
     void Vector3::normalize()
     {
-        const float EPSILON = 1e-6f;
-        const auto n = norm();
-        if (std::fabs(n) > EPSILON)
-        {
-            x /= n;
-            y /= n;
-            z /= n;
-        }
+        *this = normalized();
     }
 
     Vector3 Vector3::normalized() const
     {
-        const float EPSILON = 1e-6f;
-        const auto n = norm();
-        if (std::fabs(n) > EPSILON)
+        if (const auto n = norm(); std::fabs(n) > EPSILON)
         {
             return {x / n, y / n, z / n};
         }
@@ -82,10 +73,9 @@ namespace pe
 
     bool Vector3::operator==(const Vector3 &other) const
     {
-        const float epsilon = 1e-6f;
-        return std::fabs(x - other.x) < epsilon &&
-               std::fabs(y - other.y) < epsilon &&
-               std::fabs(z - other.z) < epsilon;
+        return std::fabs(x - other.x) < EPSILON &&
+               std::fabs(y - other.y) < EPSILON &&
+               std::fabs(z - other.z) < EPSILON;
     }
 
     std::string Vector3::to_string() const

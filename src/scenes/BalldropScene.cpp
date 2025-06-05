@@ -52,16 +52,16 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
 
     /* INTEGRATION */
     // update the rbs
-    for (auto &rb : bodies)
+    for (const auto &rb : bodies)
     {
-        forceRegitry.add(rb, gravity);
-        forceRegitry.add(rb, kineticFriction);
-        forceRegitry.add(rb, staticFriction);
-        forceRegitry.updateForces(dt);
+        forceRegistry.add(rb, gravity);
+        forceRegistry.add(rb, kineticFriction);
+        forceRegistry.add(rb, staticFriction);
+        forceRegistry.updateForces(dt);
     }
 
     // clear the force registry
-    forceRegitry.clear();
+    forceRegistry.clear();
 
     // integrate the bodies
     integrator->integrate(bodies, dt);
@@ -71,7 +71,7 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
 
     /* OPTIMISATION */
     // remove bodies that are out of the window
-    auto isOutside = [&](const std::shared_ptr<pe::RigidBody> rb)
+    auto isOutside = [&](const std::shared_ptr<pe::RigidBody>& rb)
     {
         return (rb->position.getX() > window.getSize().x ||
                 rb->position.getY() > window.getSize().y);
@@ -79,20 +79,21 @@ void Balldrop::update(sf::RenderWindow &window, float dt)
     bodies.erase(std::remove_if(bodies.begin(), bodies.end(), isOutside), bodies.end());
 }
 
-void Balldrop::gatherMouseInput(sf::RenderWindow &window)
+void Balldrop::gatherMouseInput(const sf::RenderWindow& window)
 {
     bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
     // gather mouse input
     if (isMousePressed && !wasMousePressed)
     {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
+        const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        const pe::Vector3 clickPosition{static_cast<float>(mousePos.x), static_cast<float>(mousePos.y), 0.0f};
 
         // create a new rigidbody at the mouse position
         auto rb = std::make_shared<pe::RigidBody>(clickPosition, pe::Vector3::zero(), pe::Vector3::zero(), 1.f);
-        rb->setCollider(std::make_unique<pe::SphereCollider>(50.f));
-        rb->setRenderer(std::make_unique<CircleRenderer>(50.f, sf::Color::White));
+        const auto sphereRadius = 50.f;
+        rb->setCollider(std::make_unique<pe::SphereCollider>(sphereRadius));
+        rb->setRenderer(std::make_unique<CircleRenderer>(sphereRadius, sf::Color::White));
 
         bodies.emplace_back(rb);
     }

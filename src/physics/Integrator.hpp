@@ -25,7 +25,7 @@ namespace pe
     public:
         void integrate(std::vector<std::shared_ptr<RigidBody>> &bodies, float dt) override
         {
-            for (auto &body : bodies)
+            for (const auto &body : bodies)
             {
                 // Avoid useless integration of static bodies
                 if (body->isStatic())
@@ -80,7 +80,7 @@ namespace pe
                     init = true;
                 }
 
-                Vector3 temp = body->position;
+                const Vector3 temp = body->position;
 
                 // Verlet position update
                 body->position = body->position * 2.0f - oldPos + body->acceleration * dt * dt;
