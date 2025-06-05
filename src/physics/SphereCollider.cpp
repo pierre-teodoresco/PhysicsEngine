@@ -19,10 +19,9 @@ namespace pe
 
         // Vector from sphere center to other sphere center
         Vector3 delta = self.position - otherBody.position;
-        float dist = delta.norm();
 
         // Check if the spheres are colliding
-        if (dist <= (this->radius + sphere.radius))
+        if (const float dist = delta.norm(); dist <= (this->radius + sphere.radius))
         {
             result.colliding = true;
             // Normal from sphere to sphere
@@ -46,19 +45,19 @@ namespace pe
         ContactManifold result;
 
         // Calculate the closest point on the box to the sphere center
-        auto minBox = otherBody.position;
-        auto maxBox = otherBody.position + Vector3(box.length, box.width, box.height);
+        const auto minBox = otherBody.position;
+        const auto maxBox = otherBody.position + Vector3(box.length, box.width, box.height);
 
-        float closestPointX = std::max(minBox.getX(), std::min(self.position.getX(), maxBox.getX()));
-        float closestPointY = std::max(minBox.getY(), std::min(self.position.getY(), maxBox.getY()));
-        float closestPointZ = std::max(minBox.getZ(), std::min(self.position.getZ(), maxBox.getZ()));
-        Vector3 closestPoint(closestPointX, closestPointY, closestPointZ);
+        const float closestPointX = std::max(minBox.getX(), std::min(self.position.getX(), maxBox.getX()));
+        const float closestPointY = std::max(minBox.getY(), std::min(self.position.getY(), maxBox.getY()));
+        const float closestPointZ = std::max(minBox.getZ(), std::min(self.position.getZ(), maxBox.getZ()));
+        const Vector3 closestPoint(closestPointX, closestPointY, closestPointZ);
 
         // Vector from closest point to sphere center
-        Vector3 delta = self.position - closestPoint;
-        float dist = delta.norm();
+        const Vector3 delta = self.position - closestPoint;
 
-        if (dist <= radius)
+
+        if (const float dist = delta.norm(); dist <= radius)
         {
             result.colliding = true;
             result.normal = delta.normalized();

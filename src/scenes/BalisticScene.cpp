@@ -44,20 +44,20 @@ void Balistic::update(sf::RenderWindow &window, float dt)
     std::cout << "Number of bodies: " << bodies.size() << std::endl;
 }
 
-void Balistic::gatherMouseInput(sf::RenderWindow &window)
+void Balistic::gatherMouseInput(const sf::RenderWindow& window)
 {
-    bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    const bool isMousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
     // gather mouse input
     if (isMousePressed && !wasMousePressed)
     {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        pe::Vector3 clickPosition{float(mousePos.x), float(mousePos.y), 0.0f};
+        const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        const pe::Vector3 clickPosition{static_cast<float>(mousePos.x), static_cast<float>(mousePos.y), 0.0f};
 
         pe::Vector3 bottomLeftCorner{.0f, static_cast<float>(window.getSize().y), .0f};
 
         // get the vector from the bottom left corner of the window to the mouse position
-        pe::Vector3 direction = clickPosition - bottomLeftCorner;
+        const pe::Vector3 direction = clickPosition - bottomLeftCorner;
 
         // create a new rigidbody at the bottom left corner of the window with a velocity in the direction of the mouse
         auto rb = std::make_shared<pe::RigidBody>(bottomLeftCorner, direction, pe::Vector3::zero(), 1.f);

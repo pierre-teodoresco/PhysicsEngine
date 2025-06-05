@@ -17,14 +17,14 @@ namespace pe
          * @brief Detect and resolve collisions between all bodies
          * @param bodies vector of shared pointers to RigidBody
          */
-        static void detectAndResolveCollisions(std::vector<std::shared_ptr<RigidBody>> &bodies)
+        static void detectAndResolveCollisions(const std::vector<std::shared_ptr<RigidBody>> &bodies)
         {
             for (size_t i = 0; i < bodies.size(); ++i)
             {
                 for (size_t j = i + 1; j < bodies.size(); ++j)
                 {
-                    auto &a = bodies[i];
-                    auto &b = bodies[j];
+                    const auto &a = bodies[i];
+                    const auto &b = bodies[j];
                     if (a->collider && b->collider)
                     {
                         auto contact = a->collider->isColliding(*b->collider, *a, *b);
@@ -47,7 +47,7 @@ namespace pe
          * @param b RigidBody
          * @param contact ContactManifold containing collision information
          */
-        static void resolveCollision(RigidBody &a, RigidBody &b, ContactManifold &contact)
+        static void resolveCollision(RigidBody &a, RigidBody &b, const ContactManifold &contact)
         {
             /* === Resolve only if necessary === */
             // If there is no collision, do nothing
@@ -61,9 +61,9 @@ namespace pe
             /* === Impulse-based resolution === */
             // Calculate the relative velocity
             Vector3 relativeVelocity = a.velocity - b.velocity;
-            float relativeVelocityAlongNormal = relativeVelocity.dot(contact.normal);
-            float impulseMagnitude = (1.f + contact.restitution) * relativeVelocityAlongNormal / (a.inverseMass + b.inverseMass);
-            Vector3 impulse = contact.normal * impulseMagnitude;
+            const float relativeVelocityAlongNormal = relativeVelocity.dot(contact.normal);
+            const float impulseMagnitude = (1.f + contact.restitution) * relativeVelocityAlongNormal / (a.inverseMass + b.inverseMass);
+            const Vector3 impulse = contact.normal * impulseMagnitude;
 
             a.velocity -= impulse * a.inverseMass;
             b.velocity += impulse * b.inverseMass;
@@ -74,10 +74,9 @@ namespace pe
             const float percent = 0.8f; // between 20% and 80%
             const float slop = 0.01f;   // slop to avoid jittering
 
-            float penetration = contact.penetration - slop;
-            if (penetration > 0.0f)
+            if (const float penetration = contact.penetration - slop; penetration > 0.0f)
             {
-                Vector3 correction = contact.normal * (penetration / (a.inverseMass + b.inverseMass)) * percent;
+                const Vector3 correction = contact.normal * (penetration / (a.inverseMass + b.inverseMass)) * percent;
                 if (!a.isStatic())
                     a.position -= correction * a.inverseMass;
                 if (!b.isStatic())

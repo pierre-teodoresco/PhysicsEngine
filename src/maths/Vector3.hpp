@@ -151,6 +151,8 @@ namespace pe
         [[nodiscard]] std::string to_string() const;
 
     private:
+        static constexpr float EPSILON = 1e-6f;
+
         float x{.0}, y{.0}, z{.0};
     };
 }

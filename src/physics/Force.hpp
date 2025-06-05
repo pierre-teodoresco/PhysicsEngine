@@ -21,7 +21,7 @@ namespace pe
          * @param rb RigidBody on which the force is applied
          * @param duration duration of the frame
          */
-        virtual void updateForce(std::shared_ptr<RigidBody> rb, float duration) = 0;
+        virtual void updateForce(const std::shared_ptr<RigidBody>& rb, float duration) const = 0;
     };
 
     /**
@@ -36,7 +36,7 @@ namespace pe
             std::shared_ptr<ForceGenerator> fg;
         };
 
-        typedef std::vector<ForceRegistration> Registry;
+        using Registry = std::vector<ForceRegistration>;
 
         /**
          * @brief Add a RigidBody and its force generator to the registry
@@ -74,14 +74,14 @@ namespace pe
     {
     public:
         Gravity() = default;
-        ~Gravity() = default;
+        ~Gravity() override = default;
 
         /**
          * @brief Apply gravity to a RigidBody
          * @param rb targeted RigidBody
          * @param duration duration of a frame (unused)
          */
-        void updateForce(std::shared_ptr<RigidBody> rb, [[maybe_unused]] float duration)
+        void updateForce(const std::shared_ptr<RigidBody>& rb, [[maybe_unused]] float duration) const override
         {
             rb->applyForce(Vector3{0.f, GRAVITY * PIXELS_PER_METER, 0.f});
         }
@@ -93,15 +93,15 @@ namespace pe
     class StaticFriction : public ForceGenerator
     {
     public:
-        StaticFriction(float coefficient) : coefficient(coefficient) {}
-        ~StaticFriction() = default;
+        explicit StaticFriction(float coefficient) : coefficient(coefficient) {}
+        ~StaticFriction() override = default;
 
         /**
          * @brief Apply static friction to a RigidBody
          * @param rb targeted RigidBody
          * @param duration duration of a frame (unused)
          */
-        void updateForce(std::shared_ptr<RigidBody> rb, [[maybe_unused]] float duration) override
+        void updateForce(const std::shared_ptr<RigidBody>& rb, [[maybe_unused]] float duration) const override
         {
             if (rb->isStatic())
                 return;
@@ -110,13 +110,13 @@ namespace pe
                 return; // Movement, no static friction
 
             // Normal force magnitude is the weight of the body
-            float gravityMagnitude = GRAVITY * PIXELS_PER_METER;
-            float normalForceMagnitude = rb->getMass() * gravityMagnitude;
+            const float gravityMagnitude = GRAVITY * PIXELS_PER_METER;
+            const float normalForceMagnitude = rb->getMass() * gravityMagnitude;
 
-            float maxStaticFriction = coefficient * normalForceMagnitude;
+            const float maxStaticFriction = coefficient * normalForceMagnitude;
 
             // Get the sum of all forces applied to the body (except friction)
-            Vector3 appliedForce = rb->accumulatedForce;
+            const Vector3 appliedForce = rb->accumulatedForce;
 
             // Calculate the magnitude of the applied force
             float appliedForceMagnitude = appliedForce.norm();
@@ -139,15 +139,15 @@ namespace pe
     class KineticFriction : public ForceGenerator
     {
     public:
-        KineticFriction(float coefficient) : coefficient(coefficient) {}
-        ~KineticFriction() = default;
+        explicit KineticFriction(float coefficient) : coefficient(coefficient) {}
+        ~KineticFriction() override = default;
 
         /**
          * @brief Apply kinetic friction to a RigidBody
          * @param rb targeted RigidBody
          * @param duration duration of a frame (unused)
          */
-        void updateForce(std::shared_ptr<RigidBody> rb, [[maybe_unused]] float duration) override
+        void updateForce(const std::shared_ptr<RigidBody>& rb, [[maybe_unused]] float duration) const override
         {
             if (rb->isStatic())
                 return;
@@ -156,12 +156,12 @@ namespace pe
                 return; // No movement, no kinetic friction
 
             // Normal force magnitude is the weight of the body
-            float gravityMagnitude = GRAVITY * PIXELS_PER_METER;
-            float normalForceMagnitude = rb->getMass() * gravityMagnitude;
+            const float gravityMagnitude = GRAVITY * PIXELS_PER_METER;
+            const float normalForceMagnitude = rb->getMass() * gravityMagnitude;
 
             // Friction force: direction is opposite to velocity, magnitude is mu_k * |n|
-            Vector3 frictionDirection = -rb->velocity.normalized();
-            Vector3 frictionForce = frictionDirection * coefficient * normalForceMagnitude;
+            const Vector3 frictionDirection = -rb->velocity.normalized();
+            const Vector3 frictionForce = frictionDirection * coefficient * normalForceMagnitude;
 
             rb->applyForce(frictionForce);
         }
